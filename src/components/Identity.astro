@@ -1,0 +1,43 @@
+---
+import phone from '../assets/identity-phone.jpeg';
+import logo from '../assets/logo.svg';
+import pista from '../assets/pista.png';
+import rugby from '../assets/rugby.png';
+import text from '../assets/logo-text.svg';
+---
+
+<section class="mx-auto py-28 px-20 w-full items-center justify-center flex gap-8 bg-white mt-[100vh]" aria-labelledby="identity-heading">
+    <div class="flex flex-col gap-8">
+        <header class="flex items-center gap-20">
+            <h1 id="identity-heading" class="w-64 text-wrap text-3xl">
+                <span class="font-bold">DACTIVE</span> es la nueva app que conecta deportistas
+            </h1>
+            <div class="flex gap-8">
+                <figure class="h-60 w-72 rounded-3xl overflow-hidden">
+                    <img class="h-full w-full object-cover" src={phone.src} alt="Phone displaying the DACTIVE app" />
+                </figure>
+                <figure class="w-56 h-60 bg-black rounded-3xl flex items-center justify-center">
+                    <img class="w-40 h-40" src={logo.src} alt="DACTIVE logo" />
+                </figure>
+            </div>
+        </header>
+        <div class="flex gap-8">
+            <figure class="h-60 w-[535px] bg-green-300 rounded-3xl overflow-hidden">
+                <img class="h-full w-full object-cover" src={rugby.src} alt="Rugby players on a field" />
+            </figure>
+            <div class="w-79 h-60 bg-gradient-to-t from-primary to-secondary via-secondary rounded-3xl flex items-center justify-center">
+                <p class="text-[40px] flex flex-col italic font-extrabold text-center">
+                    <span>MATCH</span>
+                    <span class="flex gap-1">
+                        <span>ES</span> 
+                        <span>MÁS</span>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <figure class="w-[229px] h-[507px] rounded-3xl overflow-hidden relative">
+        <img class="h-full w-full object-cover" src={pista.src} alt="Sports track" />
+        <img class="absolute top-0 left-1/2 transform -translate-x-1/2 w-auto h-full px-8" src={text.src} alt="DACTIVE text logo" />
+    </figure>
+</section>

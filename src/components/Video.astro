@@ -1,0 +1,12 @@
+---
+import video from '../assets/dactive.mp4';
+---
+
+<div class="absolute inset-0 z-[-2]">
+    <video autoplay muted class="absolute top-0 left-1/2 transform -translate-x-1/2 w-auto h-full object-cover blur-lg">
+        <source src={video} type="video/mp4" />
+    </video>
+    <video autoplay muted class="absolute top-0 left-1/2 transform -translate-x-1/2 w-auto h-full object-cover scale-95" id="not-blur-video">
+        <source src={video} type="video/mp4" />
+    </video>
+</div>
