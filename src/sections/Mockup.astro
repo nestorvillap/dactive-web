@@ -1,0 +1,35 @@
+---
+import mock1 from '@/assets/images/phone/mock1.png';
+import mock2 from '@/assets/images/phone/mock2.png';
+import mock3 from '@/assets/images/phone/mock3.png';
+---
+
+<section class="flex flex-col items-center justify-center italic overflow-hidden">
+    <h2 class="text-secondary font-black text-5xl text-center" data-aos="fade-in">EL PODER DE ELEGIR</h2>
+    <p class="text-white italic text-center">¿Cómo funciona?</p>
+    <div class="relative ">
+        <img
+            src={mock1.src}
+            data-aos="fade-right"
+            alt="Mockup 1"
+            class="self-start ml-[-30%]"
+        />
+        <div class="absolute top-1/3 right-0 mr-7 flex flex-col gap-6">
+            <h3 class="text-secondary font-semibold text-4xl max-w-48">LO QUE QUIERES</h3>
+            <p class="text-white text-2xl max-w-48">Casi tantos deportes como quieras</p>
+        </div>
+    </div>
+    <img
+        src={mock2.src}
+        alt="Mockup 2"
+        class="self-end mr-[-30%]"
+        data-aos="fade-left"
+    />
+    <img
+        src={mock3.src}
+        alt="Mockup 3"
+        class="self-start ml-[-30%]"
+        data-aos="fade-right"
+
+    />
+</section>
