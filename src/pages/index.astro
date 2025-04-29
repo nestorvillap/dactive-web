@@ -8,17 +8,12 @@ import Teams from '@/sections/Teams.astro';
 import Download from '@/sections/Download.astro';
 import Footer from '@/sections/Footer.astro';
 import '@fontsource-variable/inter';
-import 'aos/dist/aos.css';
 ---
 
 <Layout>
     <Header/>
     <Hero/>
     <Identity/>
-
-
-    <script>
-        import AOS from "aos";
-        AOS.init();
-    </script>
+    <Download/>
+    <Footer/>
 </Layout>
