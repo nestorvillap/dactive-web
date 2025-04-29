@@ -1,6 +1,8 @@
 ---
-import downloadPlay from '../assets/images/downloadPlay.png';
-import downloadApp from '../assets/images/downloadApple.png';
+import downloadPlay from '@/assets/images/downloadPlay.png';
+import downloadApp from '@/assets/images/downloadApple.png';
+import tenis from '@/assets/images/sports/tenis.png';
+import escalada from '@/assets/images/sports/escalada.webp';
 ---
 
 <script is:inline>
@@ -37,14 +39,14 @@ import downloadApp from '../assets/images/downloadApple.png';
   <div class="relative w-full flex items-center justify-center overflow-hidden h-[60vw] max-h-[700px] min-h-[300px]">
     <img
       id="slider-img-1"
-      src="/src/assets/images/sports/escalada.webp"
+      src={escalada.src}
       alt="Deporte"
       class="rounded-t-2xl absolute inset-0 object-cover w-full h-full shadow-lg transition-opacity duration-700"
       style="opacity: 1;"
     />
     <img
       id="slider-img-2"
-      src="/src/assets/images/sports/tenis.png"
+      src={tenis.src}
       alt="Deporte"
       class="rounded-t-2xl absolute inset-0 object-cover w-full h-full shadow-lg transition-opacity duration-700"
       style="opacity: 0;"
