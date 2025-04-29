@@ -2,103 +2,146 @@
 import mock1 from '@/assets/images/phone/mock1.png';
 import mock2 from '@/assets/images/phone/mock2.png';
 import mock3 from '@/assets/images/phone/mock3.png';
-import Search from '@/assets/images/search.svg';
+import Search from '@/assets/images/search.svg?raw'; // Importar como raw para inline SVG
 ---
 
-<section class="bg-red-400 mockup-section relative flex flex-col gap-20 items-center justify-center max-w-[1440px] py-28 px-20 mx-auto">
-    <!-- <div class="rounded-full w-16 h-16 bg-secondary shadow-lg absolute left-1/2 -translate-x-1/2 top-0 bouncing-ball">
-    </div> -->
-    
+<section class="mockup-section overflow-hidden relative flex flex-col gap-20 items-center justify-center max-w-[1440px] py-28 px-4 sm:px-8 md:px-20 mx-auto">
+    <!-- Título -->
     <div id="anim-title">
-        <h2 class="text-secondary font-black text-5xl text-center italic">EL PODER DE ELEGIR</h2>
+        <h2 class="text-secondary font-black text-4xl sm:text-5xl text-center italic">EL PODER DE ELEGIR</h2>
         <p class="text-gray-500 italic text-center">¿Cómo funciona?</p>
     </div>
 
-    <div class="h-screen w-full flex justify-between items-center">
+    {/* Bloque 1: LO QUE QUIERES */}
+    {/* Layout: Columna por defecto, Fila en md y superior */}
+    <div class="w-full flex flex-col md:flex-row justify-center md:justify-between items-center gap-10 md:gap-4">
+        {/* Imagen: Orden 1 en móvil, Orden 1 en md */}
         <img
             src={mock1.src}
-            alt="Mockup 1"
-            class="max-w-[1440px] -ml-[33%]"
+            alt="Mockup 1 - Selección de deporte"
+            class="w-[100%] md:-ml-[30%] order-1"
         />
-        <div class="flex flex-col gap-6 min-w-48">
-            <h3 class="text-secondary font-semibold text-4xl">LO QUE QUIERES</h3>
-            <p class="text-2xl">Casi tantos deportes como quieras</p>
-            
-            <div class="flex flex-col">
-                <div class="relative">
-                    <div class="absolute left-3 top-1/2 -translate-y-1/2">
-                        <Search/>
-                    </div>
-                    <input
-                        type="text"
-                        placeholder="Buscar deportes"
-                        class="bg-secondary placeholder:text-white not-italic text-white pl-10 px-4 py-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
+        {/* Texto: Orden 2 en móvil, Orden 2 en md */}
+        {/* Añadido items-center md:items-start para alinear el contenido de la columna */}
+        <div class="flex flex-col gap-4 md:gap-6 text-center md:text-left w-full md:w-auto md:min-w-48 order-2 items-center md:items-start">
+            <h3 class="text-secondary font-semibold text-3xl md:text-4xl">LO QUE QUIERES</h3>
+            <p class="text-xl md:text-2xl dark:text-white">Casi tantos deportes como quieras</p>
+
+            {/* Contenedor relativo para el input y el icono */}
+            <div class="relative max-w-xs mx-auto md:mx-0 w-full">
+                 {/* Icono SVG inline posicionado absolutamente */}
+                <div class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white pointer-events-none flex items-center justify-center">
+                    <Fragment set:html={Search} />
+                </div>
+                <input
+                    id="sport-search-input"
+                    type="text"
+                    placeholder="Buscar deportes"
+                    class="bg-secondary placeholder:text-white text-white not-italic pl-10 pr-4 py-2 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-primary text-shadow-md"
+                />
+                {/* Contenedor para mostrar el resultado de la búsqueda */}
+                <div id="sport-search-result" class="absolute left-0 right-0 mt-1 z-10"> {/* Posicionado absolutamente para no empujar el contenido */}
+                    {/* El resultado se insertará aquí */}
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="h-screen w-full flex justify-between items-center">
-
-        <div class="flex flex-col gap-6 min-w-48">
-            <h3 class="text-secondary font-semibold text-4xl">DÓNDE QUIERES</h3>
-            <p class="text-2xl">Localizaciones privadas, públicas, naturales…</p>
-        </div>
-
+    {/* Bloque 2: DÓNDE QUIERES */}
+    {/* Layout: Columna por defecto, Fila en md y superior */}
+    <div class="w-full flex flex-col md:flex-row justify-center md:justify-between items-center gap-10 md:gap-4">
+        {/* Imagen: Orden 1 en móvil, Orden 2 en md */}
         <img
             src={mock2.src}
-            alt="Mockup 1"
-            class="max-w-4xl w-1/2"
+            alt="Mockup 2 - Selección de ubicación"
+            class="w-[100%] md:-mr-[30%] order-2"
         />
-
+        {/* Texto: Orden 2 en móvil, Orden 1 en md */}
+        <div class="flex flex-col gap-4 md:gap-6 text-center md:text-left w-full md:w-auto md:min-w-48 order-2 md:order-1">
+            <h3 class="text-secondary font-semibold text-3xl md:text-4xl">DÓNDE QUIERES</h3>
+            <p class="text-xl md:text-2xl dark:text-white">Localizaciones privadas, públicas, naturales…</p>
+        </div>
     </div>
-    
-    
 
-
-    <div class="h-screen w-full flex justify-between items-center">
+    {/* Bloque 3: CON QUIÉN QUIERES */}
+    {/* Layout: Columna por defecto, Fila en md y superior */}
+    <div class="w-full flex flex-col md:flex-row justify-center md:justify-between items-center gap-10 md:gap-4">
+        {/* Imagen: Orden 1 en móvil, Orden 1 en md */}
         <img
             src={mock3.src}
-            alt="Mockup 1"
-            class="max-w-4xl w-1/2"
+            alt="Mockup 3 - Selección de jugadores"
+            class="w-[100%] md:-ml-[30%] order-1"
         />
-        <div class="flex flex-col gap-6 min-w-48">
-            <h3 class="text-secondary font-semibold text-4xl">CON QUIÉN QUIERES</h3>
-            <p class="text-2xl">La plantilla de jugadores potenciales</p>
+        {/* Texto: Orden 2 en móvil, Orden 2 en md */}
+        <div class="flex flex-col gap-4 md:gap-6 text-center md:text-left w-full md:w-auto md:min-w-48 order-2">
+            <h3 class="text-secondary font-semibold text-3xl md:text-4xl">CON QUIÉN QUIERES</h3>
+            <p class="text-xl md:text-2xl dark:text-white">La plantilla de jugadores potenciales</p>
         </div>
     </div>
 </section>
 
-<!-- <script >
-    import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
-    gsap.registerPlugin(ScrollTrigger);
+<script>
+    // Lista de deportes (puedes expandirla o cargarla desde otro lugar)
+    const sports = [
+        "Fútbol",
+        "Baloncesto",
+        "Tenis",
+        "Pádel",
+        "Voleibol",
+        "Running",
+        "Ciclismo",
+        "Natación",
+        "Gimnasio"
+    ];
 
-    // Animación de título
-    gsap.from("#anim-title", {
-        scrollTrigger: {
-            trigger: "#anim-title",
-            start: "top 80%",
-            toggleActions: "play none none none"
-        },
-        opacity: 0,
-        y: 50,
-        duration: 0.3
-    });
+    const searchInput = document.getElementById('sport-search-input') as HTMLInputElement;
+    const searchResultContainer = document.getElementById('sport-search-result');
 
-    // Animación de pelota rebotando sincronizada con scroll
-    gsap.to(".bouncing-ball", {
-        scrollTrigger: {
-            trigger: ".mockup-section", // Cambia el trigger a una clase específica
-            start: "top top",
-            end: "+=600",
-            pin: true,
-            scrub: true,
-            pinSpacing: true,
-        },
-        y: 320,
-        ease: "bounce.out",
-        duration: 1
-    });
-</script> -->
+    // Función para normalizar texto: quitar tildes y convertir a minúsculas
+    function normalizeString(str: string): string {
+        return str
+            .toLowerCase()
+            .normalize("NFD") // Separa caracteres base de diacríticos (tildes)
+            .replace(/[\u0300-\u036f]/g, ""); // Elimina los diacríticos
+    }
+
+    if (searchInput && searchResultContainer) {
+        searchInput.addEventListener('input', () => {
+            const searchTerm = normalizeString(searchInput.value.trim()); // Normalizar término de búsqueda
+            searchResultContainer.innerHTML = ''; // Limpiar resultados anteriores
+
+            if (searchTerm === '') {
+                return; // No mostrar nada si la búsqueda está vacía
+            }
+
+            const foundSport = sports.find(sport =>
+                normalizeString(sport).includes(searchTerm) // Normalizar deporte antes de comparar
+            );
+
+            // Crear la tarjeta de resultado
+            const resultCard = document.createElement('div');
+            // Clases base para la tarjeta
+            resultCard.classList.add('bg-secondary', 'mt-2', 'dark:bg-gray-800', 'p-3', 'rounded-lg', 'shadow-md', 'text-sm', 'w-full','text-shadow-md', 'text-white'); // Añadido shadow-md y w-full
+
+            if (foundSport) {
+                resultCard.textContent = `Deporte encontrado: ${foundSport}`; // Mostrar el nombre original
+                resultCard.classList.add();
+            } else {
+                resultCard.textContent = 'Todavía no tenemos ese deporte.';
+                resultCard.classList.add();
+            }
+
+            searchResultContainer.appendChild(resultCard);
+        });
+
+        // Opcional: Ocultar resultados si se hace clic fuera del input/resultados
+        document.addEventListener('click', (event) => {
+            if (!searchInput.contains(event.target as Node) && !searchResultContainer.contains(event.target as Node)) {
+                searchResultContainer.innerHTML = ''; // Limpiar resultados
+            }
+        });
+
+    } else {
+        console.error("No se encontraron los elementos de búsqueda (input o result container).");
+    }
+</script>
