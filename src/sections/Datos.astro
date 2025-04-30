@@ -1,31 +1,31 @@
 ---
 // Importa tus imágenes PNG aquí.
-import IconRapidez from '@/assets/images/icons/rapidez.png';
-import IconPrivacidad from '@/assets/images/icons/privacidad.png';
-import IconAfinidad from '@/assets/images/icons/afinidad.png';
-import IconAccesibilidad from '@/assets/images/icons/accesibilidad.png';
-import IconBienestar from '@/assets/images/icons/bienestar.png';
+import IconRapidez from '@/assets/images/icons/rapidez.svg';
+import IconPrivacidad from '@/assets/images/icons/privacidad.svg';
+import IconAfinidad from '@/assets/images/icons/afinidad.svg';
+import IconAccesibilidad from '@/assets/images/icons/accesibilidad.svg';
+import IconBienestar from '@/assets/images/icons/bienestar.svg';
 
 // Datos para las tarjetas
 const cards = [
   {
     title: 'Rapidez',
     icon: IconRapidez,
-    description: '¡No busques partidos y haz que el partido te busque a ti! El nuevo sistema de matching @DACTIVE no requiere que hagas scroll, preguntes a tus amigos y gestiones incertidumbres. ¡Hazlo fácil y efectivo!',
+    description: 'Deja que el partido te encuentre. El sistema de matching DACTIVE elimina la búsqueda activa y la incertidumbre. Conéctate fácil y rápido.', // Texto ajustado
     colSpan: 'md:col-span-1',
     iconPos: 'top-0 right-0 translate-x-1/3 -translate-y-1/3' // Icono arriba a la derecha
   },
   {
     title: 'Privacidad',
     icon: IconPrivacidad,
-    description: 'Juega con privacidad, sin exposiciones ni filtros. Conéctate con autenticidad y seguridad.',
+    description: 'Tu juego, tus reglas. Conéctate de forma segura y auténtica, sin exposiciones innecesarias ni filtros. Priorizamos tu privacidad en cada conexión.', // Texto ajustado
     colSpan: 'md:col-span-1',
     iconPos: 'top-0 right-0 translate-x-1/3 -translate-y-1/3' // Icono arriba a la derecha
   },
   {
     title: 'Afinidad',
     icon: IconAfinidad,
-    description: 'Nos aseguramos de que cada conexión refleje verdaderas coincidencias de intereses y disponibilidad.',
+    description: 'Conectamos jugadores con intereses y disponibilidad similares. Aseguramos que cada partido sea una experiencia compartida y relevante para todos.', // Texto ajustado
     colSpan: 'md:col-span-1',
     // Corregido: Posición del icono a la derecha
     iconPos: 'top-0 right-0 translate-x-1/3 -translate-y-1/3' // Icono arriba a la derecha
@@ -33,14 +33,14 @@ const cards = [
   {
     title: 'Accesibilidad',
     icon: IconAccesibilidad,
-    description: 'Sólo con desearlo ya tienes medio partido. El resto déjaselo a DACTIVE y no te preocupes por buscar ni preguntar a tus contactos.',
+    description: 'Jugar es más fácil que nunca. DACTIVE se encarga de encontrar tu próximo partido, eliminando la necesidad de buscar o coordinar con contactos.', // Texto ajustado
     colSpan: 'md:col-span-1',
     iconPos: 'top-0 right-0 translate-x-1/3 -translate-y-1/3' // Icono arriba a la derecha
   },
   {
     title: 'Bienestar',
     icon: IconBienestar,
-    description: 'La pasión por el deporte y una competitividad sana guían cada partido. Una fusión entre tecnología y deporte, hecha de todos y para todos.',
+    description: 'Fomentamos la pasión por el deporte con competitividad sana. Unimos tecnología y comunidad para crear una experiencia deportiva inclusiva.', // Texto ajustado
     colSpan: 'md:col-span-1',
     iconPos: 'top-0 right-0 translate-x-1/3 -translate-y-1/3' // Icono arriba a la derecha
   },
@@ -49,31 +49,24 @@ const cards = [
 
 <section class="py-20 px-20 max-w-[1440px] mx-auto">
     {/* Cambiado a items-stretch para igualar alturas */}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12 items-stretch">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-12 items-stretch">
         {/* Bloque "MATCH ES MÁS" - Ocupa una columna en md */}
-        <div class="md:col-span-1 flex items-center justify-center md:justify-start h-full">
-            <h2 class="text-4xl md:text-5xl font-extrabold italic text-center md:text-left text-secondary">
-                <span class="[text-shadow:2px_2px_2px_#EE7C1B]">MATCH</span><br class="hidden md:block"/>
-                <span class="[text-shadow:2px_2px_2px_#EE7C1B]">ES MÁS</span>
-            </h2>
-        </div>
+        <h2 class="flex flex-col items-center justify-center text-4xl md:text-5xl font-extrabold italic text-center md:text-left text-secondary">
+            <span class="[text-shadow:2px_2px_2px_#EE7C1B]">MATCH</span>
+            <span class="[text-shadow:2px_2px_2px_#EE7C1B]">ES MÁS</span>
+        </h2>
 
         {/* Tarjetas - Ocupan las columnas restantes */}
-        {cards.map((card, index) => (
+        {cards.map((Card, index) => (
             // Añadido h-full para que todas las tarjetas tengan la misma altura en la fila
-            <div class={`relative border-3 border-secondary rounded-2xl p-6 pt-8 bg-white dark:bg-black ${card.colSpan} h-full`}>
+            <div class={`relative border-3 border-secondary rounded-2xl p-6 pt-8 bg-white dark:bg-black ${Card.colSpan} h-full`}>
                 {/* Icono */}
-                <div class={`absolute ${card.iconPos} bg-white dark:bg-black p-1 rounded-full flex items-center justify-center w-10 h-10`}>
-                    {/* Usa <img> y card.icon.src */}
-                    <img
-                        src={card.icon.src}
-                        alt={`${card.title} icon`}
-                        class="w-7 h-7 object-contain"
-                    />
+                <div class={`absolute ${Card.iconPos} bg-white dark:bg-black p-1 rounded-full flex items-center justify-center w-10 h-10`}>
+                      <Card.icon class={"text-black dark:text-white"}/>
                 </div>
                 {/* Contenido */}
-                <h3 class="text-xl font-bold mb-2 text-black dark:text-white">{card.title}</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300">{card.description}</p>
+                <h3 class="text-xl font-bold mb-2 text-black dark:text-white">{Card.title}</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">{Card.description}</p>
             </div>
         ))}
     </div>

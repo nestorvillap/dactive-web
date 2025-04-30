@@ -1,0 +1,8 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "dactive-web",
+    "compatibility_date": "2025-04-30",
+    "assets": {
+      "directory": "./dist"
+    }
+  }
