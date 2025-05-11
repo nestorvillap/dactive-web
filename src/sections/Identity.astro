@@ -1,7 +1,5 @@
 ---
-import volley from '@/assets/images/sports/volley.webp';
 import Logo from '@/assets/images/logo.svg';
-import baloncesto from '@/assets/images/sports/baloncesto.webp';
 import balonBaloncesto from '@/assets/images/balon/baloncesto.png';
 import pista from '@/assets/images/pistas/pista-roja.webp';
 import mockup from '@/assets/images/phone/mockup-app.webp';
@@ -24,7 +22,7 @@ import shadow from '@/assets/images/balon/shadow.png';
                         <img class="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" src={pista.src} alt="Pista deportiva con superficie roja" />
                         <Text class="absolute top-0 left-1/2 transform -translate-x-1/2 w-auto h-full px-8 text-white scale-10" aria-hidden="true" />
                     </figure>
-                    <div class="group flex-none aspect-square bg-[linear-gradient(180deg,_#FBCF58_0%,_#EE7C1B_100%)] rounded-3xl items-center justify-center flex overflow-hidden" role="img" aria-label="Logo de DACTIVE">
+                    <div class="group flex-none h-60 aspect-square bg-[linear-gradient(180deg,_#FBCF58_0%,_#EE7C1B_100%)] rounded-3xl items-center justify-center flex overflow-hidden" role="img" aria-label="Logo de DACTIVE">
                         <Logo class="w-32 h-32 text-white rotate-12 transition-all duration-1000 ease-in-out group-hover:rotate-[732deg]" />
                     </div>
                 </div>
@@ -80,7 +78,7 @@ import shadow from '@/assets/images/balon/shadow.png';
             } else {                                       // → Con scroll
                 extra = base + PAD * 2;                    // añadimos PAD a ambos lados
                 section.style.height = extra * factor + window.innerHeight + 'px';
-                track.style.paddingLeft  = track.style.paddingRight = 0;          // limpia si venía de “sin scroll”
+                track.style.paddingLeft  = track.style.paddingRight = "0";          // limpia si venía de “sin scroll”
             }
         };
 
@@ -108,8 +106,8 @@ import shadow from '@/assets/images/balon/shadow.png';
                 target = PAD;
             } else if (y < end) {             // desplazamiento activo
                 track.style.position = 'fixed';
-                track.style.top = 0;
-                track.style.left = 0;
+                track.style.top = "0";
+                track.style.left = "0";
                 target = (start - y) / factor + PAD;
             } else {                          // después de salir
                 track.style.position = 'relative';
