@@ -59,58 +59,65 @@ import shadow from '@/assets/images/balon/shadow.png';
     const track   = document.getElementById('identity-track');
 
     if (section && track) {
-        const factor = 2;          // velocidad
-        const PAD    = 64;         // ⇐ espacio deseado (64 px; ajusta a tu gusto)
+        const factor = 2;      // velocidad del efecto
+        const PAD    = 64;     // margen deseado (px)
 
-        let extra = 0, current = 0, target = 0, ticking = false;
+        let base  = 0;         // ancho sobrante sin márgenes
+        let extra = 0;         // ancho total a recorrer (incl. márgenes)
+        let current = 0, target = 0, ticking = false;
         const ease = .1;
 
+        /* ――― Se ejecuta en load y en resize ――― */
         const resize = () => {
-            /* Reservamos padding a ambos lados (+PAD*2) */
-            extra = track.scrollWidth - window.innerWidth + PAD * 2;
-
-            if (extra <= 0) {
+            base  = track.scrollWidth - window.innerWidth; // Sobra “real”
+            if (base <= 0) {                               // → Sin scroll
+                extra = 0;
                 section.style.height = '';
-                track.style.position = 'relative';
+                track.style.position  = 'relative';
                 track.style.transform = 'translateX(0)';
+                track.style.paddingLeft  = track.style.paddingRight = PAD + 'px'; // margen estático opcional
                 target = 0;
-            } else {
+            } else {                                       // → Con scroll
+                extra = base + PAD * 2;                    // añadimos PAD a ambos lados
                 section.style.height = extra * factor + window.innerHeight + 'px';
+                track.style.paddingLeft  = track.style.paddingRight = 0;          // limpia si venía de “sin scroll”
             }
         };
 
+        /* ――― Animación suavizada ――― */
         const animate = () => {
             current += (target - current) * ease;
             track.style.transform = `translateX(${current}px)`;
-            if (Math.abs(target - current) > .4) requestAnimationFrame(animate);
+            if (Math.abs(target - current) > 0.4) requestAnimationFrame(animate);
             else ticking = false;
         };
 
         resize();
         window.addEventListener('resize', resize);
+
+        /* ――― Efecto durante el scroll ――― */
         window.addEventListener('scroll', () => {
-            if (extra <= 0) return;
+            if (base <= 0) return;            // nada que hacer si cabe
 
             const start = section.offsetTop;
             const end   = start + extra * factor;
             const y     = window.scrollY;
 
-            if (y < start) {
+            if (y < start) {                  // antes de entrar
                 track.style.position = 'relative';
-                target = PAD;                              // ⇐ deja PAD al inicio
-            } else if (y >= start && y < end) {
+                target = PAD;
+            } else if (y < end) {             // desplazamiento activo
                 track.style.position = 'fixed';
-                track.style.top  = 0;
+                track.style.top = 0;
                 track.style.left = 0;
-                target = (start - y) / factor + PAD;       // ⇐ corrige con PAD
-            } else {
+                target = (start - y) / factor + PAD;
+            } else {                          // después de salir
                 track.style.position = 'relative';
                 track.style.top = extra * factor + 'px';
-                target = -extra + PAD;                     // ⇐ deja PAD al final
+                target = -base - PAD;
             }
 
             if (!ticking) { ticking = true; requestAnimationFrame(animate); }
         });
     }
 </script>
->
