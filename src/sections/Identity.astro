@@ -6,65 +6,111 @@ import balonBaloncesto from '@/assets/images/balon/baloncesto.png';
 import pista from '@/assets/images/pistas/pista-roja.webp';
 import mockup from '@/assets/images/phone/mockup-app.webp';
 import Text from '@/assets/images/logo-text.svg';
-import balonTenis from '@/assets/images/balon/tenis.png'; // Asegúrate de que esta imagen exista
+import balonTenis from '@/assets/images/balon/tenis.png';
 import shadow from '@/assets/images/balon/shadow.png';
 ---
 
-<section class="mx-auto py-28 px-20 max-w-[1440px] items-center justify-center flex gap-8 bg-white dark:bg-black" aria-labelledby="identity-heading">
-    {/* Contenedor principal que usa flex-grow para ocupar espacio si es necesario */}
-    <div class="flex flex-col gap-8 flex-grow">
-        {/* Fila superior */}
-        <div class="flex items-stretch justify-center md:justify-between gap-8 h-60"> {/* Aplicar altura fija a la fila */}
-            {/* TEXTO ARRIBA*/}
-            <div class="flex items-center min-w-2/5 dark:text-white"> {/* Contenedor para centrar el texto verticalmente */}
-                <h1 id="identity-heading" class="w-full md:text-left text-center text-3xl flex-shrink-0"> {/* Permitir encoger, limitar ancho máximo en md */}
-                    <span class="font-bold">DACTIVE</span> <span lang="es">es la nueva app que conecta deportistas</span>
-                </h1>
+<section id="identity-scroll" class="relative overflow-hidden bg-white dark:bg-black" aria-labelledby="identity-heading">
+    <div id="identity-track" class="max-w-[1440px] mx-auto flex gap-8 px-5 lg:px-20 py-28 items-start">
+        <div class="flex flex-col gap-8 flex-grow">
+            <div class="flex items-stretch justify-between gap-8 h-60">
+                <div class="flex items-center min-w-2/5 dark:text-white">
+                    <h1 id="identity-heading" class="w-full text-left text-3xl flex-shrink-0">
+                        <span class="font-bold">DACTIVE</span> <span lang="es">es la nueva app que conecta deportistas</span>
+                    </h1>
+                </div>
+                <div class="gap-8 flex flex-grow">
+                    <figure class="min-w-90 group flex-1 rounded-3xl overflow-hidden relative">
+                        <img class="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" src={pista.src} alt="Pista deportiva con superficie roja" />
+                        <Text class="absolute top-0 left-1/2 transform -translate-x-1/2 w-auto h-full px-8 text-white scale-10" aria-hidden="true" />
+                    </figure>
+                    <div class="group flex-none aspect-square bg-[linear-gradient(180deg,_#FBCF58_0%,_#EE7C1B_100%)] rounded-3xl items-center justify-center flex overflow-hidden" role="img" aria-label="Logo de DACTIVE">
+                        <Logo class="w-32 h-32 text-white rotate-12 transition-all duration-1000 ease-in-out group-hover:rotate-[732deg]" />
+                    </div>
+                </div>
             </div>
-            {/* 2 IMAGENES ARRIBA*/}
-            <div class="gap-8 hidden md:flex flex-grow"> {/* Contenedor de imágenes usa flex-grow */}
-                {/* Pista Figure */}
-                <figure class="group flex-1 rounded-3xl overflow-hidden relative"> {/* flex-1 para ocupar espacio */}
-                    <img class="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" src={pista.src} alt="Pista deportiva con superficie roja" />
-                    <Text class="absolute top-0 left-1/2 transform -translate-x-1/2 w-auto h-full px-8 text-white scale-10" aria-hidden="true" />
+            <div class="flex gap-8 justify-center items-stretch h-60">
+                <figure class="min-w-90 group flex-1 rounded-3xl overflow-hidden flex relative">
+                    <img class="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" src={mockup.src} alt="Mockup de la aplicación DACTIVE" />
                 </figure>
-                {/* Logo Div */}
-                <div class="group flex-none aspect-square bg-[linear-gradient(180deg,_#FBCF58_0%,_#EE7C1B_100%)] rounded-3xl items-center justify-center hidden lg:flex overflow-hidden" role="img" aria-label="Logo de DACTIVE"> {/* Mantener ancho fijo para el logo, pero quitar altura */}
-                    {/* Aplicamos transición larga para rotación y opacidad. En hover, rotamos 720 grados adicionales (732 total) y reducimos opacidad */}
-                    <Logo class="w-32 h-32 text-white rotate-12 transition-all duration-1000 ease-in-out group-hover:rotate-[732deg]" />
-                </div>
-            </div>
-        </div>
-        {/* Fila inferior */}
-        <div class="flex gap-8 justify-center items-stretch h-60"> {/* Aplicar altura fija a la fila y alinear items */}
-            {/* IMAGEN IZQUIERDA (Mockup) */}
-            <figure class="group flex-1 rounded-3xl overflow-hidden hidden sm:flex relative">
-                <img class="h-full w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110" src={mockup.src} alt="Mockup de la aplicación DACTIVE" />
-            </figure>
-            {/* Nuevo diseño basado en la imagen - Cuadrado */}
-            <div class="group flex-none w-72 rounded-3xl bg-black dark:bg-[#CBCBCB] p-8 flex flex-col justify-center items-center gap-4 relative overflow-hidden" role="img" aria-label="Eslogan de la aplicación: MATCH ES MÁS con pelotas de baloncesto y tenis">
-                {/* Botón Superior: MATCH + Baloncesto */} 
-                <div class="relative w-full max-w-xs">
-                    <div class="bg-secondary border-t-4 border-primary rounded-full px-8 py-3 text-left overflow-hidden">
-                        <span class="text-primary text-3xl font-extrabold italic tracking-wider inline-block w-full transform transition-transform duration-500 ease-in-out group-hover:translate-x-[calc(100%-7.5rem)]">MATCH</span>
+                <div class="group flex-none w-72 rounded-3xl bg-black dark:bg-[#CBCBCB] p-8 flex flex-col justify-center items-center gap-4 relative overflow-hidden" role="img" aria-label="Eslogan de la aplicación: MATCH ES MÁS con pelotas de baloncesto y tenis">
+                    <div class="relative w-full max-w-xs">
+                        <div class="bg-secondary border-t-4 border-primary rounded-full px-8 py-3 text-left overflow-hidden">
+                            <span class="text-primary text-3xl font-extrabold italic tracking-wider inline-block w-full transform transition-transform duration-500 ease-in-out group-hover:translate-x-[calc(100%-7.5rem)]">MATCH</span>
+                        </div>
+                        <img src={balonBaloncesto.src} alt="" class="absolute z-10 -right-0 -top-0 w-17 h-17 transform rotate-12 transition-transform duration-500 ease-in-out group-hover:-translate-x-[10rem]" aria-hidden="true" />
+                        <img src={shadow.src} alt="" class="absolute z-0 right-1 -top-0 w-17 h-17 transition-transform duration-500 ease-in-out group-hover:-translate-x-[9.5rem]" aria-hidden="true" />
                     </div>
-                    {/* Mover pelota de baloncesto en hover */}
-                    <img src={balonBaloncesto.src} alt="" class="absolute z-10 -right-0 -top-0 w-17 h-17 transform rotate-12 transition-transform duration-500 ease-in-out group-hover:-translate-x-[10rem]" aria-hidden="true"/>
-                    {/* Mover sombra con la pelota */}
-                    <img src={shadow.src} alt="" class="absolute z-0 right-1 -top-0 w-17 h-17 transition-transform duration-500 ease-in-out group-hover:-translate-x-[9.5rem]" aria-hidden="true"/>
-                </div>
-
-                {/* Botón Inferior: ES MÁS + Tenis */}
-                <div class="relative w-full max-w-xs">
-                    <div class="bg-primary border-t-4 border-secondary rounded-full px-8 py-3 text-right">
-                        <span class="text-secondary text-3xl font-extrabold italic tracking-wider inline-block w-full transform transition-transform duration-500 ease-in-out group-hover:-translate-x-[calc(100%-7.5rem)]" lang="es">ES MÁS</span>
+                    <div class="relative w-full max-w-xs">
+                        <div class="bg-primary border-t-4 border-secondary rounded-full px-8 py-3 text-right">
+                            <span class="text-secondary text-3xl font-extrabold italic tracking-wider inline-block w-full transform transition-transform duration-500 ease-in-out group-hover:-translate-x-[calc(100%-7.5rem)]" lang="es">ES MÁS</span>
+                        </div>
+                        <img src={balonTenis.src} alt="" class="z-10 absolute -left-0 -top-0 w-17 h-17 transform -rotate-12 transition-transform duration-500 ease-in-out group-hover:translate-x-[10rem]" aria-hidden="true" />
+                        <img src={shadow.src} alt="" class="absolute z-0 left-1 -top-0 w-17 h-17 transition-transform duration-500 ease-in-out group-hover:translate-x-[9.5rem]" aria-hidden="true" />
                     </div>
-                    {/* Mover pelota de tenis en hover */}
-                    <img src={balonTenis.src} alt="" class="z-10 absolute -left-0 -top-0 w-17 h-17 transform -rotate-12 transition-transform duration-500 ease-in-out group-hover:translate-x-[10rem]" aria-hidden="true"/>
-                    {/* Mover sombra con la pelota */}
-                    <img src={shadow.src} alt="" class="absolute z-0 left-1 -top-0 w-17 h-17 transition-transform duration-500 ease-in-out group-hover:translate-x-[9.5rem]" aria-hidden="true"/>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    const section = document.getElementById('identity-scroll');
+    const track   = document.getElementById('identity-track');
+
+    if (section && track) {
+        const factor = 2;          // velocidad
+        const PAD    = 64;         // ⇐ espacio deseado (64 px; ajusta a tu gusto)
+
+        let extra = 0, current = 0, target = 0, ticking = false;
+        const ease = .1;
+
+        const resize = () => {
+            /* Reservamos padding a ambos lados (+PAD*2) */
+            extra = track.scrollWidth - window.innerWidth + PAD * 2;
+
+            if (extra <= 0) {
+                section.style.height = '';
+                track.style.position = 'relative';
+                track.style.transform = 'translateX(0)';
+                target = 0;
+            } else {
+                section.style.height = extra * factor + window.innerHeight + 'px';
+            }
+        };
+
+        const animate = () => {
+            current += (target - current) * ease;
+            track.style.transform = `translateX(${current}px)`;
+            if (Math.abs(target - current) > .4) requestAnimationFrame(animate);
+            else ticking = false;
+        };
+
+        resize();
+        window.addEventListener('resize', resize);
+        window.addEventListener('scroll', () => {
+            if (extra <= 0) return;
+
+            const start = section.offsetTop;
+            const end   = start + extra * factor;
+            const y     = window.scrollY;
+
+            if (y < start) {
+                track.style.position = 'relative';
+                target = PAD;                              // ⇐ deja PAD al inicio
+            } else if (y >= start && y < end) {
+                track.style.position = 'fixed';
+                track.style.top  = 0;
+                track.style.left = 0;
+                target = (start - y) / factor + PAD;       // ⇐ corrige con PAD
+            } else {
+                track.style.position = 'relative';
+                track.style.top = extra * factor + 'px';
+                target = -extra + PAD;                     // ⇐ deja PAD al final
+            }
+
+            if (!ticking) { ticking = true; requestAnimationFrame(animate); }
+        });
+    }
+</script>
+>
