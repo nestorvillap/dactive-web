@@ -1,6 +1,18 @@
-export const prerender = false;
-
 import type { APIRoute } from "astro";
+
+const COOKIE_OPTIONS = {
+  path: "/",
+  httpOnly: true,
+  secure: import.meta.env.PROD,
+  maxAge: 60 * 60 * 24 * 7, // 1 semana
+};
+
+function jsonResponse(data: Record<string, string>, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
@@ -8,33 +20,17 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const password = formData.get("password")?.toString();
 
     if (!password) {
-      return new Response(
-        JSON.stringify({ message: "Contraseña requerida." }),
-        { status: 400 }
-      );
+      return jsonResponse({ message: "Contraseña requerida." }, 400);
     }
 
-    const serverPassword = import.meta.env.SECRET_PASSWORD;
-
-    if (password === serverPassword) {
-      cookies.set("isLoggedIn", "true", {
-        path: "/",
-        httpOnly: true,
-        secure: import.meta.env.PROD, // true en producción, false en desarrollo
-        maxAge: 60 * 60 * 24 * 7, // 1 semana de duración
-      });
-      return new Response(JSON.stringify({ message: "Login exitoso." }), {
-        status: 200,
-      });
-    } else {
-      return new Response(
-        JSON.stringify({ message: "Contraseña incorrecta." }),
-        { status: 401 }
-      );
+    if (password !== import.meta.env.SECRET_PASSWORD) {
+      return jsonResponse({ message: "Contraseña incorrecta." }, 401);
     }
+
+    cookies.set("isLoggedIn", "true", COOKIE_OPTIONS);
+    return jsonResponse({ message: "Login exitoso." }, 200);
   } catch (error) {
-    return new Response(JSON.stringify({ message: "Error en el servidor." }), {
-      status: 500,
-    });
+    console.error("Error en API login:", error);
+    return jsonResponse({ message: "Error en el servidor." }, 500);
   }
 };
