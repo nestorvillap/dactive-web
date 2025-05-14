@@ -1,6 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "web",
+  "main": "./dist/_worker.js/index.js",
   "compatibility_date": "2025-04-30",
-  "pages_build_output_dir": "dist",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "observability": {
+    "enabled": true
+  }
 }
