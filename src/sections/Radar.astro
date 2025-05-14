@@ -1,17 +1,11 @@
 ---
-import radar from '@/assets/videos/radar.mp4';
-import Logo from '@/assets/images/logo.svg';
-// El usuario añadirá la importación de la imagen final aquí
-// import finalImage from '@/assets/images/final-image.png';
+import radar from '@/assets/videos/radar.mp4'
 ---
 
 <section id="radar-section" class="rounded-2xl overflow-hidden relative bg-black max-w-[1440px] mx-auto flex flex-col gap-8 justify-center items-center">
-    {/* Video que se reproduce al ser visible */}
-    <video src={radar} muted autoplay loop class="w-full" id="radar-video">
+    <video src={radar} muted autoplay loop playsinline class="w-full">
         <source src={radar} type="video/mp4">
-        Tu navegador no soporta el elemento de video.
     </video>
-    {/* Textos superpuestos */}
     <h1 class="absolute top-[10%] left-1/2 hidden md:block -translate-x-1/2 text-secondary text-4xl font-black text-center pointer-events-none">¡Radar activado!</h1>
     <h1 class="absolute bottom-[10%] hidden md:block  left-1/2 -translate-x-1/2 text-white text-2xl font-black text-center pointer-events-none">¡Activa el radar y encuentra tu próximo partido!</h1>
 </section>
