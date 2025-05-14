@@ -2,11 +2,6 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "web",
   "compatibility_date": "2025-04-30",
-  // apunta al directorio que ahora genera Astro
-  "functions": {
-    "directory": "./functions"
-  },
-  // tu build estático
   "assets": {
     "directory": "./dist"
   }
