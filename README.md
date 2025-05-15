@@ -1,4 +1,4 @@
-# Dactive Web
+# DACTIVE WEB
 
 Este proyecto es una web desarrollada con Astro para la empresa Dactive. La web incluye una landing page y un blog.
 
