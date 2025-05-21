@@ -8,11 +8,13 @@ import Radar from '@/sections/Radar.astro';
 import Mockup from '@/sections/Mockup.astro';
 import Identity from '@/sections/Identity.astro';
 import Download from '@/sections/Download.astro';
+import FormularioContacto from '@/sections/FormularioContacto.astro'; // Nueva importación
 import Footer from '@/sections/Footer.astro';
 
 const isLoggedIn = Astro.cookies.get('isLoggedIn')?.value === 'true';
 
-const sections = [Header, Hero, Identity, Mockup, Radar, Datos, Download, Footer];
+// Modificar el array de secciones para incluir FormularioContacto
+const sections = [Header, Hero, Identity, Mockup, Radar, Datos, Download, FormularioContacto, Footer];
 ---
 
 <Layout title="Dactive - Conecta y Compite">

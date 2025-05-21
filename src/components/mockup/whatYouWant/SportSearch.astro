@@ -1,0 +1,65 @@
+---
+const { sportsIconData } = Astro.props;
+---
+<aside class="lg:col-span-1 relative w-[100%] flex flex-col items-start justify-center gap-2 sm:gap-3 md:gap-4 p-4 sm:p-5 md:p-6 order-1 lg:order-2">
+  <div class="flex flex-col items-start gap-1 sm:gap-1.5 md:gap-2 w-full">
+    <h3 class="[font-size:clamp(1.5rem,4vw,2.5rem)] font-semibold text-secondary w-full">
+      LO QUE QUIERES
+    </h3>
+    <p class="[font-size:clamp(0.875rem,2.5vw,1.25rem)] w-full text-white">
+      Casi cualquier deporte que imagines
+    </p>
+  </div>
+  <div class="w-full relative">
+    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+      <svg class="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/>
+      </svg>
+    </div>
+    <input
+      id="sport-search-input"
+      type="text"
+      autocomplete="off"
+      placeholder="Buscar deportes"
+      class="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-2.5 rounded-lg placeholder-gray-500 focus:outline-none bg-white autofill:bg-white autofill:text-gray-900 text-sm sm:text-base"
+    />
+  </div>
+  <div id="sport-search-result" class="w-full min-h-[3.5rem] sm:min-h-[4rem] invisible transition-all"></div>
+
+  <script define:vars={{ sportsDataFromProp: sportsIconData }}>
+    const input = document.getElementById('sport-search-input');
+    const container = document.getElementById('sport-search-result');
+    const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    if (input && container) {
+      input.addEventListener('input', () => {
+        const term = normalize(input.value.trim());
+        container.innerHTML = '';
+        if (!term) {
+          container.classList.add('invisible');
+          return;
+        }
+        container.classList.remove('invisible');
+
+        const match =
+          sportsDataFromProp.find((d) => normalize(d.name).startsWith(term)) ||
+          sportsDataFromProp.find((d) => normalize(d.name).includes(term));
+
+        const box = document.createElement('div');
+        box.className =
+          'bg-white p-2 sm:p-3 rounded-lg shadow-md text-xs sm:text-sm flex items-center gap-2 sm:gap-3 border-2 border-secondary';
+
+        if (match) {
+          const img = document.createElement('img');
+          img.src = match.iconSrc;
+          img.alt = match.name;
+          img.className = 'w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0';
+          box.append(img, document.createTextNode(match.name));
+        } else {
+          box.textContent = 'Todavía no tenemos ese deporte.';
+        }
+        container.appendChild(box);
+      });
+    }
+  </script>
+</aside>

@@ -1,0 +1,160 @@
+---
+const { mock1Src, shadowSrc, featuredSports, iconPositions } = Astro.props;
+---
+<style is:global>
+  /* Parámetros ajustables de “física” */
+  :root {
+    --ball-start-x: -300%;
+    --ball-end-x:   0%;
+
+    --ball-drop-y:    -400px;
+    --ball-bounce1-y: -280px;
+    --ball-bounce2-y: -160px;
+    --ball-bounce3-y: -60px;
+
+    --ball-scale-start: 0.5;
+    --ball-scale-end:   1;
+
+    --ball-duration:    1.2s;
+    --ball-timing-func: ease-out;
+  }
+
+  .ball {
+    opacity: 0;
+    will-change: transform, opacity;
+    width: 100%;
+    height: 100%;
+    transform:
+      translate(-50%, -50%)
+      translateX(var(--ball-start-x))
+      translateY(var(--ball-drop-y))
+      scale(var(--ball-scale-start));
+    transition: opacity 0.2s ease-out;
+  }
+
+  .ball.animate {
+    animation: bounceReal var(--ball-duration) var(--ball-timing-func) forwards;
+  }
+
+  @keyframes bounceReal {
+    /* 0: en el aire, pequeña y oculta */
+    0% {
+      opacity: 0;
+      transform:
+        translate(-50%, -50%)
+        translateX(var(--ball-start-x))
+        translateY(var(--ball-drop-y))
+        scale(var(--ball-scale-start));
+    }
+    /* 20%: primer impacto */
+    20% {
+      opacity: 1;
+      transform:
+        translate(-50%, -50%)
+        translateX(calc(var(--ball-start-x) * 0.67))
+        translateY(0)
+        scale(var(--ball-scale-end));
+    }
+    /* 35%: rebote 1 (70% altura) */
+    35% {
+      transform:
+        translate(-50%, -50%)
+        translateX(calc(var(--ball-start-x) * 0.5))
+        translateY(var(--ball-bounce1-y))
+        scale(var(--ball-scale-end));
+    }
+    /* 50%: regreso al suelo */
+    50% {
+      transform:
+        translate(-50%, -50%)
+        translateX(calc(var(--ball-start-x) * 0.33))
+        translateY(0)
+        scale(var(--ball-scale-end));
+    }
+    /* 65%: rebote 2 (40% altura) */
+    65% {
+      transform:
+        translate(-50%, -50%)
+        translateX(calc(var(--ball-start-x) * 0.17))
+        translateY(var(--ball-bounce2-y))
+        scale(var(--ball-scale-end));
+    }
+    /* 80%: regreso de nuevo */
+    80% {
+      transform:
+        translate(-50%, -50%)
+        translateX(calc(var(--ball-start-x) * 0.08))
+        translateY(0)
+        scale(var(--ball-scale-end));
+    }
+    /* 90%: micro-rebote final (15% altura) */
+    90% {
+      transform:
+        translate(-50%, -50%)
+        translateX(calc(var(--ball-start-x) * 0.03))
+        translateY(var(--ball-bounce3-y))
+        scale(var(--ball-scale-end));
+    }
+    /* 100%: posición final */
+    100% {
+      opacity: 1;
+      transform:
+        translate(-50%, -50%)
+        translateX(var(--ball-end-x))
+        translateY(0)
+        scale(var(--ball-scale-end));
+    }
+  }
+</style>
+
+<figure class="relative overflow-hidden lg:col-span-2 order-2 lg:order-1 flex items-center">
+  <img
+    src={mock1Src}
+    alt="Selección de deporte"
+    class="w-full -ml-[15%]"
+  />
+
+  {featuredSports.map((sport, i) => {
+    const pos = iconPositions[i % iconPositions.length];
+    const widthClass = sport.featuredWidth; // p.ej. "w-[20%]"
+    const delay = `${i * 150}ms`;
+
+    return (
+      <div
+        class={`ball-wrapper absolute ${widthClass} aspect-square`}
+        data-index={i}
+        style={`top: ${pos.top}; left: ${pos.left}; overflow: visible;`}
+      >
+        <div class="ball" style={`animation-delay: ${delay}`}>
+          <img
+            src={shadowSrc}
+            alt=""
+            class="absolute inset-0 w-full h-full scale-90 translate-x-2 translate-y-2 z-0"
+          />
+          <img
+            src={sport.iconSrc}
+            alt={sport.name}
+            class="absolute inset-0 w-full h-full z-10"
+          />
+        </div>
+      </div>
+    );
+  })}
+</figure>
+
+<script is:inline>
+  const wrappers = document.querySelectorAll('.ball-wrapper');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const ball = entry.target.querySelector('.ball');
+          ball.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+  wrappers.forEach((w) => observer.observe(w));
+</script>

@@ -1,77 +1,55 @@
 ---
-import downloadPlay from '@/assets/images/downloadPlay.png'
-import downloadApp from '@/assets/images/downloadApple.png'
-import tenis from '@/assets/images/sports/tenis.png'
-import escalada from '@/assets/images/sports/escalada.webp'
+import AppStore from '@/assets/images/AppStore.svg';
+import GooglePlay from '@/assets/images/PlayStore.svg';
+import tenis from '@/assets/images/sports/tenis.png';
+import escalada from '@/assets/images/sports/escalada.webp';
+const images = [escalada.src, tenis.src];
 ---
+<section class="flex flex-col items-center justify-center w-full max-w-max-content mx-auto pt-12 sm:pt-16 md:pt-20 lg:pt-24 mb-16 sm:mb-20 md:mb-24 lg:mb-32">
+  <div id="slider" data-images={JSON.stringify(images)} class="relative w-full overflow-hidden h-[60vw] max-h-[700px] min-h-[300px]">
+    <img id="slider-img-1" src={images[0]} alt="Deporte escalada" class="absolute inset-0 object-cover w-full h-full transition-opacity duration-700" style="opacity:1;" />
+    <img id="slider-img-2" src={images[1]} alt="Deporte tenis" class="absolute inset-0 object-cover w-full h-full transition-opacity duration-700" style="opacity:0;" />
 
-<section class="flex flex-col items-center justify-center w-full max-h-screen max-w-[1440px] mx-auto">
-  <span id="escalada-src" data-src={escalada.src} class="hidden"></span>
-  <span id="tenis-src" data-src={tenis.src} class="hidden"></span>
-  <div class="relative w-full flex items-center justify-center overflow-hidden h-[60vw] max-h-[700px] min-h-[300px]">
-    <img
-      id="slider-img-1"
-      src={escalada.src}
-      alt="Deporte"
-      class="rounded-t-2xl absolute inset-0 object-cover w-full h-full shadow-lg transition-opacity duration-700"
-      style="opacity: 1;"
-    />
-    <img
-      id="slider-img-2"
-      src={tenis.src}
-      alt="Deporte"
-      class="rounded-t-2xl absolute inset-0 object-cover w-full h-full shadow-lg transition-opacity duration-700"
-      style="opacity: 0;"
-    />
-    <h1 class="hidden lg:block text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-96 italic text-secondary font-bold absolute top-[39%] left-[22%] transform -translate-x-1/2 -translate-y-1/2 text-center [text-shadow:_1px_1px_2px_rgba(0,0,0,0.3)]">DESCARGA LA APP</h1>
-    <h1 class="hidden lg:block text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-96 italic text-secondary font-bold absolute top-[53%] left-[53%] transform -translate-x-1/2 -translate-y-1/2 text-center [text-shadow:_1px_1px_2px_rgba(0,0,0,0.3)]">Y HAZ MATCH</h1>
-    <div class="absolute -translate-y-0
-        flex flex-col items-center gap-4
-        lg:right-10  lg:top-1/2 lg:-translate-y-1/2 lg:items-end">
-      <img
-      src={downloadPlay.src}
-      alt="Descargar en Google Play"
-      class="cursor-pointer hover:scale-110 w-48 sm:w-52 md:w-56 lg:w-64 xl:w-72 h-auto transition-all duration-300"
-      />
-      <img
-      src={downloadApp.src}
-      alt="Descargar en App Store"
-      class="cursor-pointer hover:scale-110 w-48 sm:w-52 md:w-56 lg:w-64 xl:w-72 h-auto transition-all duration-300"
-      />
+    <!-- Texto 1: sólo en lg+ -->
+    <h1 class="hidden lg:block absolute transform -translate-x-1/2 -translate-y-1/2 text-secondary font-bold italic text-center [text-shadow:_1px_1px_2px_rgba(0,0,0,0.3)]"
+        style="top:38%; left:25%; font-size:clamp(1.5rem,4vw,3rem);">
+      <span class="block">DESCARGA</span><span class="block">LA APP</span>
+    </h1>
+
+    <!-- Texto 2: sólo en lg+ -->
+    <h1 class="hidden lg:block absolute transform -translate-x-1/2 -translate-y-1/2 text-secondary font-bold italic text-center [text-shadow:_1px_1px_2px_rgba(0,0,0,0.3)]"
+        style="top:48%; left:52%; font-size:clamp(1.5rem,4vw,3rem);">
+      <span class="block">Y HAZ</span><span class="block">MATCH</span>
+    </h1>
+
+    <!-- Iconos: centrados por defecto, a la derecha en lg -->
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 items-center lg:left-auto lg:right-10 lg:translate-x-0 lg:-translate-y-1/2">
+      <a href="#" target="_blank" rel="noopener noreferrer">
+        <GooglePlay class="w-48 sm:w-52 md:w-56 lg:w-64 xl:w-72 h-auto cursor-pointer hover:scale-110 transition duration-300" />
+      </a>
+      <a href="#" target="_blank" rel="noopener noreferrer">
+        <AppStore class="w-48 sm:w-52 md:w-56 lg:w-64 xl:w-72 h-auto cursor-pointer hover:scale-110 transition duration-300" />
+      </a>
     </div>
   </div>
 </section>
 
 <script is:inline>
-  function iniciarSlider () {
-    const escaladaSrc = document.getElementById('escalada-src')?.getAttribute('data-src') ?? ''
-    const tenisSrc = document.getElementById('tenis-src')?.getAttribute('data-src') ?? ''
-    const images = [
-      { src: escaladaSrc },
-      { src: tenisSrc }
-    ]
-    let next = 1
-    let showingFirst = true
-
-    function crossfade () {
-      const img1 = document.getElementById('slider-img-1')
-      const img2 = document.getElementById('slider-img-2')
-      if (!img1 || !img2) return
-      if (showingFirst) {
-        if (img2 instanceof HTMLImageElement) img2.src = images[next].src
-        if (img2 instanceof HTMLElement) img2.style.opacity = '1'
-        if (img1 instanceof HTMLElement) img1.style.opacity = '0'
-      } else {
-        if (img1 instanceof HTMLImageElement) img1.src = images[next].src
-        if (img1 instanceof HTMLElement) img1.style.opacity = '1'
-        if (img2 instanceof HTMLElementcle) img2.style.opacity = '0'
-      }
-      showingFirst = !showingFirst
-      next = (next + 1) % images.length
+const sliderEl = document.getElementById('slider');
+if (sliderEl) {
+  const images = JSON.parse(sliderEl.dataset.images);
+  const img1 = document.getElementById('slider-img-1');
+  const img2 = document.getElementById('slider-img-2');
+  let next = 1;
+  let showingFirst = true;
+  setInterval(() => {
+    if (showingFirst) {
+      img2.src = images[next]; img2.style.opacity = '1'; img1.style.opacity = '0';
+    } else {
+      img1.src = images[next]; img1.style.opacity = '1'; img2.style.opacity = '0';
     }
-
-    setInterval(crossfade, 6000)
-  }
-
-  window.addEventListener('DOMContentLoaded', iniciarSlider)
+    showingFirst = !showingFirst;
+    next = (next + 1) % images.length;
+  }, 6000);
+}
 </script>

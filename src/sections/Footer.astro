@@ -1,19 +1,44 @@
 ---
-import Logo from '../assets/images/logo.svg';
-
+import AppStore from '@/assets/images/AppStore.svg';
+import PlayStore from '@/assets/images/PlayStore.svg';
 ---
+<footer class="text-white py-8">
+  <div class="max-w-max-content mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <!-- Logo + redes -->
+    <div class="flex flex-col items-center sm:items-start space-y-4">
+      <span class="font-semibold text-white w-full text-center">Redes</span>
+      <div class="flex space-x-3 items-center w-full justify-center">
+        <a href="#" aria-label="Facebook" class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center hover:bg-secondary-dark transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="black"><path d="M18 2a1 1 0 0 1 .993.883l.007.117v4a1 1 0 0 1-.883.993l-.117.007h-3v1h3a1 1 0 0 1 .991 1.131l-.02.112l-1 4a1 1 0 0 1-.858.75l-.113.007h-2v6a1 1 0 0 1-.883.993l-.117.007h-4a1 1 0 0 1-.993-.883l-.007-.117v-6h-2a1 1 0 0 1-.993-.883l-.007-.117v-4a1 1 0 0 1 .883-.993l.117-.007h2v-1a6 6 0 0 1 5.775-5.996l.225-.004h3z"/></svg></a>
+        <a href="#" aria-label="Instagram" class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center hover:bg-secondary-dark transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="black"><path d="M16 3a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5h-8a5 5 0 0 1-5-5v-8a5 5 0 0 1 5-5zm-4 5a4 4 0 0 0-3.995 3.8l-.005.2a4 4 0 1 0 4-4m4.5-1.5a1 1 0 0 0-.993.883l-.007.127a1 1 0 0 0 1.993.117l.007-.127a1 1 0 0 0-1-1"/></svg></a>
+        <a href="#" aria-label="TikTok" class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center hover:bg-secondary-dark transition"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="black"><path d="M16.083 2h-4.083a1 1 0 0 0-1 1v11.5a1.5 1.5 0 1 1-2.519-1.1l.12-.1a1 1 0 0 0 .399-.8v-4.326a1 1 0 0 0-1.23-.974 7.5 7.5 0 0 0 1.73 14.8l.243-.005a7.5 7.5 0 0 0 7.257-7.495v-2.7l.311.153c1.122.53 2.333.868 3.59.993a1 1 0 0 0 1.099-.996v-4.033a1 1 0 0 0-.834-.986 5.005 5.005 0 0 1-4.097-4.096 1 1 0 0 0-.986-.835z"/></svg></a>
+      </div>
+    </div>
 
-<footer class="w-full mt-40 text-white py-8 px-4 flex items-center justify-around gap-4 max-w-[1440px] mx-auto">
-    <aside class="flex items-center gap-3">
-        <Logo class="w-6 h-6 text-secondary" />
-        <span class="font-bold text-lg text-secondary">DACTIVE</span>
-    </aside>
-    <nav class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
-        <a href="#home" class="text-gray-300 hover:text-gray-100 transition-colors duration-300">Inicio</a>
-        <a href="#about" class="text-gray-300 hover:text-gray-100 transition-colors duration-300">Sobre nosotros</a>
-        <a href="#features" class="text-gray-300 hover:text-gray-100 transition-colors duration-300">Características</a>
-        <a href="#contact" class="text-gray-300 hover:text-gray-100 transition-colors duration-300">Contacto</a>
-        <a href="#privacy" class="text-gray-300 hover:text-gray-100 transition-colors duration-300">Política de privacidad</a>
-        <a href="#terms" class="text-gray-300 hover:text-gray-100 transition-colors duration-300">Términos de servicio</a>
+    <!-- Navegación -->
+    <nav class="flex flex-col items-center sm:items-start space-y-2 text-gray-300">
+      <span class="font-semibold text-white w-full text-center">Enlaces</span>
+      <a href="#home" class="hover:text-secondary transition w-full text-center">Inicio</a>
+      <a href="#promo" class="hover:text-secondary transition w-full text-center">Video promocional</a>
+      <a href="#privacy" class="hover:text-secondary transition w-full text-center">Política de privacidad</a>
+      <a href="#terms" class="hover:text-secondary transition w-full text-center">Términos de servicio</a>
     </nav>
+
+    <!-- Descarga App -->
+    <div class="flex flex-col items-center sm:items-start space-y-4">
+      <span class="font-semibold text-white w-full text-center">Descarga la App</span>
+      <div class="flex space-x-4 w-full justify-center">
+        <a href="https://apps.apple.com/app/id1234567890" target="_blank" rel="noopener noreferrer"><AppStore class="w-32 h-auto hover:scale-105 transition" /></a>
+        <a href="https://play.google.com/store/apps/details?id=com.example.app" target="_blank" rel="noopener noreferrer"><PlayStore class="w-32 h-auto hover:scale-105 transition" /></a>
+      </div>
+    </div>
+
+    <!-- Contacto -->
+    <div class="flex flex-col items-center sm:items-start space-y-2">
+      <span class="font-semibold text-white w-full text-center">Contáctanos</span>
+      <a href="mailto:info@dactive.es" class="text-gray-300 hover:text-secondary transition w-full text-center">info@dactive.es</a>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="mt-8 text-center text-gray-500 text-sm">© 2025 Dactive. Todos los derechos reservados.</div>
 </footer>

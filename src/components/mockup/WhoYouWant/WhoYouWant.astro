@@ -1,0 +1,166 @@
+---
+import mock3 from '@/assets/images/phone/mock3.png';
+import PlayerInfo from '@/components/mockup/WhoYouWant/PlayerInfo.astro';
+import type { PlayerCardData } from '@/data/players';
+import { playerCardData } from '@/data/players';
+---
+
+<section id="who-you-want" class="relative overflow-hidden overflow-y-hidden">
+  <div class="grid grid-cols-1 md:grid-cols-6 gap-4 sm:gap-5 md:gap-x-6 lg:gap-x-8">
+    <!-- 1) Mockup permanece con ancho y margen original -->
+    <figure class="md:col-span-4 order-2 md:order-1 flex items-center justify-center overflow-x-hidden relative z-20">
+      <img
+        src={mock3.src}
+        alt="Selección de jugadores"
+        class="w-full -ml-[15%]"
+      />
+    </figure>
+
+    <!-- 2) Info lateral -->
+    <PlayerInfo class="md:col-span-2 order-1 md:order-2" />
+
+    <!-- 3) Sección de tarjetas: track en fila única para animar -->
+    <div id="who-section" class="md:col-span-6 order-3 relative overflow-hidden -mt-[15%]">
+      <div
+        id="who-track"
+        class="flex flex-nowrap justify-start gap-2 sm:gap-3 pt-20 md:gap-4 overflow-visible"
+      >
+        {playerCardData.map((p: PlayerCardData) => (
+          <div
+            class="flex-none w-80 aspect-[5/6] rounded-lg sm:rounded-xl md:rounded-2xl shadow-xl bg-cover bg-center relative flex flex-col justify-end p-1.5 xs:p-2 sm:p-2.5 md:p-3"
+            style={`background-image:url(${p.imageSrc})`}
+          >
+            <div class="relative z-10">
+              <span class="block text-secondary font-bold text-4xl leading-tight drop-shadow-lg">
+                {p.title1}
+              </span>
+              <span class="block text-secondary font-bold text-4xl leading-tight drop-shadow-lg">
+                {p.title2}
+              </span>
+            </div>
+            <span class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent"></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+(() => {
+  const section = document.getElementById('who-section');
+  const track   = document.getElementById('who-track');
+  if (!section || !track) return;
+
+  const ease = 0.1;
+  const factor = 1; // Similar a Identity.astro para controlar la "velocidad" del scroll horizontal
+  const PAD = 0;      // Similar a Identity.astro, aunque aquí es 0 ya que no hay padding visual inicial
+
+  let base    = 0;
+  let extra   = 0;
+  let current = PAD; // Inicializar current con PAD
+  let target  = PAD; // Inicializar target con PAD
+  let ticking = false;
+
+  function resize() {
+    const containerWidth = section.offsetWidth;
+    base = track.scrollWidth - containerWidth;
+
+    if (base <= 0) {
+      extra = 0;
+      current = target = PAD;
+      section.style.height = ''; // Resetear altura si no hay scroll
+      track.style.position = 'relative';
+      track.style.top = '0';
+      track.style.left = '';
+      track.style.width = '';
+      track.style.transform = `translateX(${PAD}px)`;
+    } else {
+      extra = base + PAD * 2; // Si PAD = 0, extra = base
+      section.style.height = `${extra * factor + window.innerHeight}px`;
+    }
+    // Llamar a onScroll DESPUÉS de que la altura de la sección se haya establecido,
+    // y después de que base y extra estén definidos.
+    onScroll();
+  }
+
+  function animate() {
+    current += (target - current) * ease;
+    // Cambiado a translateX positivo, target será negativo para mover a la izquierda
+    track.style.transform = `translateX(${current}px)`;
+    if (Math.abs(target - current) > 0.5) {
+      requestAnimationFrame(animate);
+    } else {
+      ticking = false;
+    }
+  }
+
+  function onScroll() {
+    if (base <= 0) {
+      // Asegurar estado reseteado si no hay scroll horizontal
+      track.style.position = 'relative';
+      track.style.top      = '0';
+      track.style.left     = '';
+      track.style.width    = '';
+      current = target = PAD;
+      track.style.transform = `translateX(${PAD}px)`;
+      return;
+    }
+
+    const start = section.getBoundingClientRect().top + window.scrollY; // Restaurado al cálculo original de WhoYouWant
+    const end = start + extra * factor; // Calcular 'end' usando factor
+    const y = window.scrollY;
+
+    if (y < start) {
+      track.style.position = 'relative';
+      track.style.top = '0';
+      track.style.left     = ''; // Asegurar reseteo
+      track.style.width    = ''; // Asegurar reseteo
+      target = PAD; // Target inicial
+    } else if (y >= start && y <= end) {
+      // Mantener lógica para 'left' y 'width' cuando está fijo
+      const left = section.getBoundingClientRect().left;
+      track.style.position = 'fixed';
+      track.style.top      = '0';
+      track.style.left     = `${left}px`;
+      track.style.width    = `${section.offsetWidth}px`;
+      // Calcular target de forma similar a Identity.astro
+      target = (start - y) / factor + PAD;
+    } else { // y > end
+      track.style.position = 'relative';
+      track.style.top      = `${extra * factor}px`; // Posicionar después del scroll
+      track.style.left     = ''; // Asegurar reseteo
+      track.style.width    = ''; // Asegurar reseteo
+      // Target final, similar a Identity.astro
+      target = -base - PAD;
+    }
+
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(animate);
+    }
+  }
+
+  // inicial y listeners
+  const ro = new ResizeObserver(resize);
+  ro.observe(track);
+
+  window.addEventListener('resize', resize);
+  window.addEventListener('orientationchange', resize);
+  window.addEventListener('scroll', onScroll);
+  window.addEventListener('load', resize); // Asegura que todo esté cargado
+
+  // Eliminada la lógica de track.querySelectorAll('img') ya que no aplica aquí
+  // Las imágenes son background-image en divs, no <img> tags.
+
+  // Llamada inicial a resize, por si las imágenes ya están cacheadas
+  resize();
+})();
+</script>
+
+<!-- Tailwind:
+- .aspect-[5/6] mantiene proporción.
+- overflow-hidden en #who-section para ocultar.
+- Track usa flex-nowrap en una fila.
+- Las tarjetas tienen w-48…w-64 fijo.
+-->

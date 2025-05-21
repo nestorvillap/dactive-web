@@ -1,7 +1,8 @@
 ---
-import Logo from '@/assets/images/logo-text.svg';
+import LogoText from '@/assets/images/logo-text.svg';
+import Logo from '@/assets/images/logo.svg';
 ---
-
-<header class="sm:px-9 sm:py-10 px-6 py-5 max-w-[1440px] mx-auto">
-    <Logo class="xl:w-37 sm:w-30 w-24 h-5 text-secondary text-shadow-black"/>
+<header class="max-w-max-content mx-auto absolute top-0 left-0 right-0 flex items-center gap-1 sm:gap-1.5 md:gap-2 lg:gap-2.5 px-6 py-4 sm:px-9 sm:py-8 md:px-12 md:py-10 lg:px-16 lg:py-12">
+    <Logo class="aspect-square w-auto h-6 sm:h-7 md:h-8 lg:h-10 text-secondary rotate-12"/>
+    <LogoText class="w-auto h-6 sm:h-7 md:h-8 lg:h-10 text-white py-1"/>
 </header>
