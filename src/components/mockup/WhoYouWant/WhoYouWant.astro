@@ -6,9 +6,9 @@ import { playerCardData } from '@/data/players';
 ---
 
 <section id="who-you-want" class="relative overflow-hidden overflow-y-hidden">
-  <div class="grid grid-cols-1 md:grid-cols-6 gap-4 sm:gap-5 md:gap-x-6 lg:gap-x-8">
+  <div class="grid grid-cols-1 lg:grid-cols-6 gap-4 sm:gap-5 md:gap-x-6 lg:gap-x-8">
     <!-- 1) Mockup permanece con ancho y margen original -->
-    <figure class="md:col-span-4 order-2 md:order-1 flex items-center justify-center overflow-x-hidden relative z-20">
+    <figure class="lg:col-span-4 order-2 lg:order-1 flex items-center justify-center overflow-x-hidden relative z-20">
       <img
         src={mock3.src}
         alt="Selección de jugadores"
@@ -17,10 +17,10 @@ import { playerCardData } from '@/data/players';
     </figure>
 
     <!-- 2) Info lateral -->
-    <PlayerInfo class="md:col-span-2 order-1 md:order-2" />
+    <PlayerInfo class="lg:col-span-2 order-1 lg:order-2" />
 
     <!-- 3) Sección de tarjetas: track en fila única para animar -->
-    <div id="who-section" class="md:col-span-6 order-3 relative overflow-hidden -mt-[15%]">
+    <div id="who-section" class="lg:col-span-6 order-3 relative overflow-hidden -mt-[15%]">
       <div
         id="who-track"
         class="flex flex-nowrap justify-start gap-2 sm:gap-3 pt-20 md:gap-4 overflow-visible"
