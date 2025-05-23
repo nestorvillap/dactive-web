@@ -4,19 +4,21 @@ interface Props {
 }
 const { mock2Src } = Astro.props as Props;
 ---
-<figure class="lg:col-span-2 overflow-hidden">
+<figure class="lg:col-span-2 w-[115%] md:w-[100%]">
   <!-- Contenedor que recorta el 15% izquierdo -->
   <div class="map-container relative inline-block" style="transform: translateX(+15%);">
     <img
       src={mock2Src}
       alt="Mapa"
-      class="block w-full h-auto"
+      class="w-full -ml-[15%]"
       aria-hidden="true"
     />
     <!-- Pins posicionados con % respecto al ancho natural de la imagen -->
-    <div class="map-pin" style="top: 12%; left: 60%;"></div>
-    <div class="map-pin" style="top: 28%; left: 48%;"></div>
-    <div class="map-pin" style="top: 38%; left: 70%;"></div>
+    <div class="map-pin" style="top: 12%; left: 50%;"></div>
+    <div class="map-pin" style="top: 28%; left: 28%;"></div>
+    <div class="map-pin" style="top: 38%; left: 56%;"></div>
+    <div class="map-pin" style="top: 38%; left: 40%;"></div>
+    <div class="text-4xl text-secondary font-black absolute" style="top: 64%; left: 50%; rotate: 333deg">Urbanizaciones</div>
   </div>
 </figure>
 

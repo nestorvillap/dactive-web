@@ -6,8 +6,8 @@ const { sportsIconData } = Astro.props;
     <h3 class="[font-size:clamp(1.5rem,4vw,2.5rem)] font-semibold text-secondary w-full">
       LO QUE QUIERES
     </h3>
-    <p class="[font-size:clamp(0.875rem,2.5vw,1.25rem)] w-full text-white">
-      Casi cualquier deporte que imagines
+    <p class="[font-size:clamp(1rem,2.5vw,1.25rem)] w-full text-white">
+      Selecciona tus deportes favoritos
     </p>
   </div>
   <div class="w-full relative">
@@ -47,13 +47,13 @@ const { sportsIconData } = Astro.props;
 
         const box = document.createElement('div');
         box.className =
-          'bg-white p-2 sm:p-3 rounded-lg shadow-md text-xs sm:text-sm flex items-center gap-2 sm:gap-3 border-2 border-secondary';
+          'bg-white p-2 sm:p-3 rounded-lg shadow-md text-xs sm:text-lg cursor-pointer flex items-center gap-2 sm:gap-3 border-3 border-secondary font-bold';
 
         if (match) {
           const img = document.createElement('img');
           img.src = match.iconSrc;
           img.alt = match.name;
-          img.className = 'w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0';
+          img.className = 'w-6 h-6 sm:w-10 sm:h-10 flex-shrink-0';
           box.append(img, document.createTextNode(match.name));
         } else {
           box.textContent = 'Todavía no tenemos ese deporte.';

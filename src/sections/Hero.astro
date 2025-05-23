@@ -10,25 +10,26 @@ import GooglePlay from '@/assets/images/PlayStore.svg';
     <source src={video} type="video/mp4" />
   </video>
   
-  <section>
+  <section class="flex flex-col items-center">
     <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black italic text-white text-shadow-sm text-center flex flex-col p-4">
       <span>HAZ <span class="text-secondary">MATCH</span></span>
       <span>EN EL DEPORTE</span>
     </h1>
 
-    <p class="text-base sm:text-lg md:text-xl text-white text-shadow-sm text-center">
+    <!-- <p class="text-base sm:text-lg md:text-xl text-white text-shadow-sm text-center">
       Haz match con <span class="font-bold text-secondary">DACTIVE</span>
+    </p> -->
+    <p class="flex flex-col md:flex-row mt-2 text-base sm:text-lg md:text-2xl text-white font-semibold text-shadow-sm text-center sm:max-w-[80vw]  mx-auto">
+      <span >La forma más fácil </span> <span class="text-secondary">&nbsp;de practicar deporte en compañía.</span> 
     </p>
-
-  </section>
-
-  <section class="flex flex-col lg:flex-row gap-4">
-      <a href="#" target="_blank" rel="noopener noreferrer">
-        <AppStore class="w-60 lg:w-90 h-auto hover:scale-110 transition-all" />
-      </a>
-      <a href="#" target="_blank" rel="noopener noreferrer">
-        <GooglePlay class="w-60 lg:w-90 h-auto hover:scale-110 transition-all" />
-      </a>
+    <section class="mt-10 flex flex-row gap-2 max-w-[80%] md:max-w-[65%]">
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          <AppStore class="w-full h-auto hover:scale-110 transition-all" />
+        </a>
+        <a href="#" target="_blank" rel="noopener noreferrer">
+          <GooglePlay class="w-full h-auto hover:scale-110 transition-all" />
+        </a>
+    </section>
   </section>
 
 </section>
