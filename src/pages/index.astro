@@ -1,28 +1,27 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import LoginForm from '@/components/LoginForm.astro';
-import Header from '@/sections/Header.astro';
-import Hero from '@/sections/Hero.astro';
-import Datos from '@/sections/Datos.astro';
-import Radar from '@/sections/Radar.astro';
-import Mockup from '@/sections/Mockup.astro';
-import Identity from '@/sections/Identity.astro';
-import Download from '@/sections/Download.astro';
-import FormularioContacto from '@/sections/FormularioContacto.astro'; // Nueva importación
-import Footer from '@/sections/Footer.astro';
-
-const isLoggedIn = Astro.cookies.get('isLoggedIn')?.value === 'true';
-
-// Modificar el array de secciones para incluir FormularioContacto
-const sections = [Header, Hero, Identity, Mockup, Radar, Datos, Download, FormularioContacto, Footer];
+import Layout             from '@/layouts/Layout.astro';
+import LoginForm          from '@/components/LoginForm.astro';
+import Header             from '@/sections/Header.astro';
+import Hero               from '@/sections/Hero.astro';
+import Datos              from '@/sections/Datos.astro';
+import Radar              from '@/sections/Radar.astro';
+import Mockup             from '@/sections/Mockup.astro';
+import Download           from '@/sections/Download.astro';
+import FormularioContacto from '@/sections/FormularioContacto.astro'; 
+import Footer             from '@/sections/Footer.astro';
+import Hello              from '@/sections/Hello.astro';
 ---
 
 <Layout title="Dactive - Conecta y Compite">
-  { !isLoggedIn ? (
-    <LoginForm />
-  ) : (
-    <main id="main-content">
-      {sections.map((Section) => <Section />)}
-    </main>
-  )}
+  <Header />
+  <main class="overflow-hidden">
+    <Hero />
+    <Hello />
+    <Mockup />
+    <Radar />
+    <Datos />
+    <Download />
+    <FormularioContacto />
+  </main>
+  <Footer />
 </Layout>

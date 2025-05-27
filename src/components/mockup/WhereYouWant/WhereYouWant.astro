@@ -1,10 +1,9 @@
 ---
-import mock2 from '@/assets/images/phone/mock2.png';
 
 import FeaturedLocations from '@/components/mockup/WhereYouWant/FeaturedLocations.astro';
-import LocationInfo       from '@/components/mockup/WhereYouWant/LocationInfo.astro';
+import LocationInfo      from '@/components/mockup/WhereYouWant/LocationInfo.astro';
 ---
-<section class="mb-16 sm:mb-20 md:mb-24 lg:mb-32 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full overflow-y-visible">
+<section class="mb-16 sm:mb-20 md:mb-24 lg:mb-32 grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full">
   <LocationInfo />
-  <FeaturedLocations mock2Src={mock2.src} />
+  <FeaturedLocations/>
 </section>

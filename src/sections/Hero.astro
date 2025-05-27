@@ -1,34 +1,65 @@
 ---
-import video from '@/assets/videos/header.mp4';
-import AppStore from '@/assets/images/AppStore.svg';
+import video      from '@/assets/videos/header.mp4';
+import AppStore   from '@/assets/images/AppStore.svg';
 import GooglePlay from '@/assets/images/PlayStore.svg';
 ---
 
-<section class="h-screen max-w-max-content mx-auto flex flex-col justify-center items-center gap-10 relative">
-  
+<section class="gap-10 flex flex-col justify-center items-center relative h-screen mx-auto">
+  <!-- Background video -->
   <video class="absolute top-0 left-0 w-full h-full object-cover -z-1" autoplay loop muted playsinline>
     <source src={video} type="video/mp4" />
   </video>
   
-  <section>
+  <article>
+    <!-- Titulo -->
     <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-black italic text-white text-shadow-sm text-center flex flex-col p-4">
       <span>HAZ <span class="text-secondary">MATCH</span></span>
       <span>EN EL DEPORTE</span>
     </h1>
-
-    <p class="text-base sm:text-lg md:text-xl text-white text-shadow-sm text-center">
-      Haz match con <span class="font-bold text-secondary">DACTIVE</span>
+    <!-- Subtitulo -->
+    <p class="text-base max-w-72 sm:max-w-90 md:max-w-md lg:max-w-lg sm:text-md md:text-lg lg:text-xl text-white text-shadow-sm text-center mx-auto">
+     La forma más fácil<span class="text-secondary"> de&nbsp;practicar&nbsp;deporte&nbsp;en&nbsp;compañía.</span>
     </p>
+  </article>
 
-  </section>
+  <!-- Botones de descarga -->
+  <div class="flex mt-4 gap-4 items-center justify-center">
+    <a href="https://apps.apple.com/" target="_blank" rel="noopener noreferrer">
+      <AppStore class="w-36 sm:w-46 md:w-60 lg:w-90 h-auto hover:scale-110 transition-all" />
+    </a>
+    <a href="https://play.google.com/" target="_blank" rel="noopener noreferrer">
+      <GooglePlay class="w-36 sm:w-46 md:w-60 lg:w-90 h-auto hover:scale-110 transition-all" />
+    </a>
+  </div>
 
-  <section class="flex flex-col lg:flex-row gap-4">
-      <a href="#" target="_blank" rel="noopener noreferrer">
-        <AppStore class="w-60 lg:w-90 h-auto hover:scale-110 transition-all" />
-      </a>
-      <a href="#" target="_blank" rel="noopener noreferrer">
-        <GooglePlay class="w-60 lg:w-90 h-auto hover:scale-110 transition-all" />
-      </a>
-  </section>
+  <!-- Svg para marcar secciones -->
+  <div class="custom-shape-divider-bottom-1748192731">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none"> <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"/></svg>
+  </div>
 
 </section>
+
+<!-- Styles para el marcador de secciones -->
+<style>
+  .custom-shape-divider-bottom-1748192731 {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+  }
+
+  .custom-shape-divider-bottom-1748192731 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: clamp(40px, 7vw, 120px);
+  }
+
+  .custom-shape-divider-bottom-1748192731 .shape-fill {
+    fill: #FBCB4E;
+  }
+</style>
+

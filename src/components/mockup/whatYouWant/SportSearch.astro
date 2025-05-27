@@ -1,16 +1,17 @@
 ---
-const { sportsIconData } = Astro.props;
+import {sportsIconData} from '@/data/sports';
 ---
-<aside class="lg:col-span-1 relative w-[100%] flex flex-col items-start justify-center gap-2 sm:gap-3 md:gap-4 p-4 sm:p-5 md:p-6 order-1 lg:order-2">
-  <div class="flex flex-col items-start gap-1 sm:gap-1.5 md:gap-2 w-full">
-    <h3 class="[font-size:clamp(1.5rem,4vw,2.5rem)] font-semibold text-secondary w-full">
-      LO QUE QUIERES
-    </h3>
-    <p class="[font-size:clamp(0.875rem,2.5vw,1.25rem)] w-full text-white">
-      Casi cualquier deporte que imagines
-    </p>
-  </div>
-  <div class="w-full relative">
+
+<aside class="flex flex-col items-center justify-center p-4 sm:p-5 md:p-6 gap-4 sm:gap-5 order-1 lg:col-span-1 lg:order-2 relative w-full ">
+  <!-- Titulo y subtitulo -->
+  <h3 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-black italic text-secondary">
+    LO QUE QUIERES
+  </h3>
+  <p class="text-md sm:text-lg md:text-xl lg:text-2xl italic text-center text-gray-500">
+    Selecciona tus deportes&nbsp;favoritos
+  </p>
+  <!-- Input de búsqueda -->
+  <div class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-full relative">
     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
       <svg class="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/>
@@ -24,42 +25,89 @@ const { sportsIconData } = Astro.props;
       class="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-2.5 rounded-lg placeholder-gray-500 focus:outline-none bg-white autofill:bg-white autofill:text-gray-900 text-sm sm:text-base"
     />
   </div>
-  <div id="sport-search-result" class="w-full min-h-[3.5rem] sm:min-h-[4rem] invisible transition-all"></div>
-
-  <script define:vars={{ sportsDataFromProp: sportsIconData }}>
-    const input = document.getElementById('sport-search-input');
-    const container = document.getElementById('sport-search-result');
-    const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-    if (input && container) {
-      input.addEventListener('input', () => {
-        const term = normalize(input.value.trim());
-        container.innerHTML = '';
-        if (!term) {
-          container.classList.add('invisible');
-          return;
-        }
-        container.classList.remove('invisible');
-
-        const match =
-          sportsDataFromProp.find((d) => normalize(d.name).startsWith(term)) ||
-          sportsDataFromProp.find((d) => normalize(d.name).includes(term));
-
-        const box = document.createElement('div');
-        box.className =
-          'bg-white p-2 sm:p-3 rounded-lg shadow-md text-xs sm:text-sm flex items-center gap-2 sm:gap-3 border-2 border-secondary';
-
-        if (match) {
-          const img = document.createElement('img');
-          img.src = match.iconSrc;
-          img.alt = match.name;
-          img.className = 'w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0';
-          box.append(img, document.createTextNode(match.name));
-        } else {
-          box.textContent = 'Todavía no tenemos ese deporte.';
-        }
-        container.appendChild(box);
-      });
-    }
-  </script>
+  <!-- Contenedor para los resultados -->
+  <div id="sport-search-result" class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-full min-h-[3.5rem] cursor-pointer sm:min-h-[4rem] invisible transition-all"></div>
 </aside>
+
+<script define:vars={{ sportsDataFromProp: sportsIconData }}>
+  const input = document.getElementById('sport-search-input');
+  const container = document.getElementById('sport-search-result');
+  const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  if (input && container) {
+    input.addEventListener('input', () => {
+      const term = normalize(input.value.trim());
+      container.innerHTML = ''; 
+      if (!term) {
+        container.classList.add('invisible');
+        container.style.minHeight = ''; 
+        return;
+      }
+      container.classList.remove('invisible');
+      container.style.minHeight = container.classList.contains('sm:min-h-[4rem]') ? '4rem' : '3.5rem';
+
+
+      const match =
+        sportsDataFromProp.find((d) => normalize(d.name).startsWith(term)) ||
+        sportsDataFromProp.find((d) => normalize(d.name).includes(term));
+
+      const box = document.createElement('div');
+      box.className =
+        'bg-white p-2 sm:p-3 rounded-lg shadow-md text-xs sm:text-sm flex items-center gap-2 sm:gap-3 border-2 border-secondary transform transition-all duration-300 ease-in-out';
+
+      if (match) {
+        const img = document.createElement('img');
+        img.src = match.iconSrc;
+        img.alt = match.name;
+        img.className = 'w-6 h-6 sm:w-8 sm:h-8 flex-shrink-0';
+        box.append(img, document.createTextNode(match.name));
+
+        box.addEventListener('click', () => {
+          box.innerHTML = '';
+          box.className = 'bg-green-50 p-2 sm:p-3 rounded-lg shadow-md text-xs sm:text-sm flex items-center justify-center gap-2 sm:gap-3 border-2 border-green-500 transform transition-all duration-300 ease-in-out';
+
+          const foundText = document.createElement('span');
+          foundText.textContent = 'Deporte encontrado';
+          foundText.className = 'text-green-700 font-semibold opacity-0 transition-opacity duration-300 ease-in-out';
+
+          const tickSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          tickSvg.setAttribute('class', 'w-5 h-5 sm:w-6 sm:h-6 text-green-600 flex-shrink-0 opacity-0 transition-opacity duration-300 ease-in-out delay-100'); // Tailwind 'delay-100'
+          tickSvg.setAttribute('viewBox', '0 0 20 20');
+          tickSvg.setAttribute('fill', 'currentColor');
+          const tickPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          tickPath.setAttribute('fill-rule', 'evenodd');
+          tickPath.setAttribute('d', 'M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z');
+          tickPath.setAttribute('clip-rule', 'evenodd');
+          tickSvg.appendChild(tickPath);
+
+          box.append(foundText, tickSvg);
+
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              foundText.classList.remove('opacity-0');
+              tickSvg.classList.remove('opacity-0');
+            });
+          });
+
+          setTimeout(() => {
+            box.classList.add('opacity-0', 'scale-90');
+          }, 800); 
+
+          setTimeout(() => {
+            input.value = '';
+            container.innerHTML = ''; 
+            container.classList.add('invisible');
+            container.style.minHeight = ''; 
+          }, 800 + 300); 
+
+        }, { once: true });
+
+      } else {
+        box.textContent = 'Todavía no tenemos ese deporte.';
+        box.classList.remove('border-green-500');
+        box.classList.add('border-secondary');
+      }
+      container.appendChild(box);
+    });
+  }
+</script>

@@ -1,26 +1,11 @@
 ---
-import mock1 from '@/assets/images/phone/mock1.png';
-import shadowImage from '@/assets/images/balon/shadow.png';
-
 import FeaturedSports from '@/components/mockup/whatYouWant/FeaturedSports.astro';
 import SportSearch from '@/components/mockup/whatYouWant/SportSearch.astro';
-
-import {
-  sportsIconData,
-  featuredSports,
-  iconPositions
-} from '@/data/sports';
 ---
+
 <section class="flex flex-col gap-4 sm:gap-6 md:gap-8 mb-12 sm:mb-16 md:mb-20 lg:mb-24">
-    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center">¿Qué quieres hacer?</h2>
-    
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-10">
-      <FeaturedSports
-        mock1Src={mock1.src}
-        shadowSrc={shadowImage.src}
-        featuredSports={featuredSports}
-        iconPositions={iconPositions}
-      />
-      <SportSearch sportsIconData={sportsIconData} />
+      <FeaturedSports/>
+      <SportSearch/>
     </div>
 </section>

@@ -17,8 +17,6 @@ interface PlayerImageAsset {
 // La opción { import: 'default' } nos da el módulo de imagen (que esperamos sea PlayerImageAsset).
 const playerImageModules = import.meta.glob<PlayerImageAsset>('/src/assets/images/players/*.png', { eager: true, import: 'default' });
 
-console.log('Player Image Modules:', playerImageModules); // Línea de depuración añadida
-
 export const playerCardData: PlayerCardData[] = [
   {
     imageSrc: playerImageModules['/src/assets/images/players/parejas.png'].src,

@@ -1,6 +1,73 @@
 ---
-const { mock1Src, shadowSrc, featuredSports, iconPositions } = Astro.props;
+import mock1       from '@/assets/images/phone/mock1.png';
+import shadowImage from '@/assets/images/balls/shadow.png';
+import mock1Shadow from '@/assets/images/phone/leftShadow.png';
+
+import { featuredSports, iconPositions } from '@/data/sports';
 ---
+
+<figure class="relative lg:col-span-2 order-2 lg:order-1 flex items-center">
+  <!-- Contenedor para la imagen y su sombra -->
+  <div class="relative w-[115%] lg:w-full -ml-[15%]">
+    <img
+      src={mock1Shadow.src}
+      alt=""
+      class="absolute scale-200 inset-0 w-full h-full object-cover pointer-events-none"
+      aria-hidden="true"
+    />
+    <img
+      src={mock1.src}
+      alt="Selección de deporte"
+      class="relative block w-full h-auto "
+    />
+  </div>
+  <!-- Iconos de deportes destacados -->
+  {featuredSports.map((sport, i) => {
+    const pos = iconPositions[i % iconPositions.length];
+    const widthClass = sport.featuredWidth;
+    const delay = `${i * 150}ms`;
+
+    return (
+      <div
+        class={`ball-wrapper absolute ${widthClass} aspect-square`}
+        data-index={i}
+        style={`top: ${pos.top}; left: ${pos.left}; overflow: visible;`}
+      >
+        <figure class="ball" style={`animation-delay: ${delay}`}>
+          <img
+            src={shadowImage.src}
+            alt=""
+            class="absolute inset-0 w-full h-full translate-x-2 translate-y-2 z-0"
+          />
+          <img
+            src={sport.iconSrc}
+            alt={sport.name}
+            class="absolute inset-0 w-full h-full z-10"
+          />
+        </figure>
+      </div>
+    );
+  })}
+
+</figure>
+
+<script is:inline>
+  const wrappers = document.querySelectorAll('.ball-wrapper');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const ball = entry.target.querySelector('.ball');
+          ball.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+  wrappers.forEach((w) => observer.observe(w));
+</script>
+
 <style is:global>
   /* Parámetros ajustables de “física” */
   :root {
@@ -106,55 +173,3 @@ const { mock1Src, shadowSrc, featuredSports, iconPositions } = Astro.props;
     }
   }
 </style>
-
-<figure class="relative overflow-hidden lg:col-span-2 order-2 lg:order-1 flex items-center">
-  <img
-    src={mock1Src}
-    alt="Selección de deporte"
-    class="w-full -ml-[15%]"
-  />
-
-  {featuredSports.map((sport, i) => {
-    const pos = iconPositions[i % iconPositions.length];
-    const widthClass = sport.featuredWidth; // p.ej. "w-[20%]"
-    const delay = `${i * 150}ms`;
-
-    return (
-      <div
-        class={`ball-wrapper absolute ${widthClass} aspect-square`}
-        data-index={i}
-        style={`top: ${pos.top}; left: ${pos.left}; overflow: visible;`}
-      >
-        <div class="ball" style={`animation-delay: ${delay}`}>
-          <img
-            src={shadowSrc}
-            alt=""
-            class="absolute inset-0 w-full h-full scale-90 translate-x-2 translate-y-2 z-0"
-          />
-          <img
-            src={sport.iconSrc}
-            alt={sport.name}
-            class="absolute inset-0 w-full h-full z-10"
-          />
-        </div>
-      </div>
-    );
-  })}
-</figure>
-
-<script is:inline>
-  const wrappers = document.querySelectorAll('.ball-wrapper');
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const ball = entry.target.querySelector('.ball');
-          ball.classList.add('animate');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
-  wrappers.forEach((w) => observer.observe(w));
-</script>

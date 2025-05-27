@@ -1,166 +1,157 @@
 ---
-import mock3 from '@/assets/images/phone/mock3.png';
-import PlayerInfo from '@/components/mockup/WhoYouWant/PlayerInfo.astro';
 import type { PlayerCardData } from '@/data/players';
 import { playerCardData } from '@/data/players';
 ---
 
-<section id="who-you-want" class="relative overflow-hidden overflow-y-hidden">
-  <div class="grid grid-cols-1 lg:grid-cols-6 gap-4 sm:gap-5 md:gap-x-6 lg:gap-x-8">
-    <!-- 1) Mockup permanece con ancho y margen original -->
-    <figure class="lg:col-span-4 order-2 lg:order-1 flex items-center justify-center overflow-x-hidden relative z-20">
-      <img
-        src={mock3.src}
-        alt="Selección de jugadores"
-        class="w-full -ml-[15%]"
-      />
-    </figure>
+<div class="w-full flex flex-col md:flex-row md:items-center md:gap-8 p-4 md:p-8 justify-center">
 
-    <!-- 2) Info lateral -->
-    <PlayerInfo class="lg:col-span-2 order-1 lg:order-2" />
+  {/* Contenedor para el texto (aparece arriba en móvil, a la derecha en desktop) */}
+  <div class="w-full md:w-1/2 lg:w-2/5 order-1 md:order-2 mb-8 md:mb-0 flex flex-col items-center justify-center p-4 sm:p-5 md:p-6 gap-4 sm:gap-5">
+    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-black italic text-secondary">
+     Con quien quieras
+    </h2>
+    <p class="text-md sm:text-lg md:text-xl lg:text-2xl italic text-center text-gray-500">
+      Elige a tus compañeros, o deja que el sistema te sugiera tus compañeros ideales
+    </p>
+  </div>
 
-    <!-- 3) Sección de tarjetas: track en fila única para animar -->
-    <div id="who-section" class="lg:col-span-6 order-3 relative overflow-hidden -mt-[15%]">
-      <div
-        id="who-track"
-        class="flex flex-nowrap justify-start gap-2 sm:gap-3 pt-20 md:gap-4 overflow-visible"
-      >
-        {playerCardData.map((p: PlayerCardData) => (
-          <div
-            class="flex-none w-80 aspect-[5/6] rounded-lg sm:rounded-xl md:rounded-2xl shadow-xl bg-cover bg-center relative flex flex-col justify-end p-1.5 xs:p-2 sm:p-2.5 md:p-3"
-            style={`background-image:url(${p.imageSrc})`}
-          >
-            <div class="relative z-10">
-              <span class="block text-secondary font-bold text-4xl leading-tight drop-shadow-lg">
-                {p.title1}
-              </span>
-              <span class="block text-secondary font-bold text-4xl leading-tight drop-shadow-lg">
-                {p.title2}
-              </span>
-            </div>
-            <span class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent"></span>
+  {/* Contenedor para Slider + Indicador de Puntos */}
+  <div class="relative md:w-1/2 lg:w-3/5 order-2 md:order-1">
+    <section
+      id="player-slider"
+      class="h-[85vh] overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
+    >
+      {playerCardData.map((p: PlayerCardData, index: number) => (
+        <div
+          id={`player-card-${index}`}
+          class="snap-center flex-none w-full h-[75vh] mx-auto my-8 rounded-2xl shadow-2xl bg-cover bg-center relative flex flex-col justify-end p-4 sm:p-6 md:p-8 overflow-hidden"
+          style={`background-image:url(${p.imageSrc})`}
+        >
+          <div class="relative z-10">
+            <span class="block text-secondary font-bold text-3xl sm:text-4xl md:text-5xl leading-tight drop-shadow-lg">
+              {p.title1}
+            </span>
+            <span class="block text-secondary font-bold text-3xl sm:text-4xl md:text-5xl leading-tight drop-shadow-lg">
+              {p.title2}
+            </span>
           </div>
-        ))}
-      </div>
+          <span class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent"></span>
+
+          {/* Indicador de scroll (flecha) solo en la primera tarjeta */}
+          {index === 0 && (
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 sm:w-8 sm:h-8 text-white opacity-75">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
+          )}
+        </div>
+      ))}
+    </section>
+
+    {/* Indicador de Puntos del Slider */}
+    <div id="slider-dots" class="absolute top-1/2 -translate-y-1/2 left-2 sm:left-3 md:left-4 flex flex-col gap-2.5 z-30">
+      {playerCardData.map((_, index) => (
+        <button
+          aria-label={`Ir al slide ${index + 1}`}
+          data-slide-index={index}
+          class="slider-dot w-2 h-2 cursor-pointer rounded-full transition-colors duration-300 focus:outline-none"
+        ></button>
+      ))}
     </div>
   </div>
-</section>
+</div>
 
-<script type="module">
-(() => {
-  const section = document.getElementById('who-section');
-  const track   = document.getElementById('who-track');
-  if (!section || !track) return;
-
-  const ease = 0.1;
-  const factor = 1; // Similar a Identity.astro para controlar la "velocidad" del scroll horizontal
-  const PAD = 0;      // Similar a Identity.astro, aunque aquí es 0 ya que no hay padding visual inicial
-
-  let base    = 0;
-  let extra   = 0;
-  let current = PAD; // Inicializar current con PAD
-  let target  = PAD; // Inicializar target con PAD
-  let ticking = false;
-
-  function resize() {
-    const containerWidth = section.offsetWidth;
-    base = track.scrollWidth - containerWidth;
-
-    if (base <= 0) {
-      extra = 0;
-      current = target = PAD;
-      section.style.height = ''; // Resetear altura si no hay scroll
-      track.style.position = 'relative';
-      track.style.top = '0';
-      track.style.left = '';
-      track.style.width = '';
-      track.style.transform = `translateX(${PAD}px)`;
-    } else {
-      extra = base + PAD * 2; // Si PAD = 0, extra = base
-      section.style.height = `${extra * factor + window.innerHeight}px`;
-    }
-    // Llamar a onScroll DESPUÉS de que la altura de la sección se haya establecido,
-    // y después de que base y extra estén definidos.
-    onScroll();
+<style>
+  /* oculta la scrollbar en WebKit, opcional */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  /* y también en Firefox */
+  .scrollbar-hide {
+    scrollbar-width: none;
   }
 
-  function animate() {
-    current += (target - current) * ease;
-    // Cambiado a translateX positivo, target será negativo para mover a la izquierda
-    track.style.transform = `translateX(${current}px)`;
-    if (Math.abs(target - current) > 0.5) {
-      requestAnimationFrame(animate);
-    } else {
-      ticking = false;
-    }
+    /* Clase que deshabilita scroll y clicks */
+  .slider-disabled {
+    overflow-y: hidden !important;
+    pointer-events: none !important;
   }
 
-  function onScroll() {
-    if (base <= 0) {
-      // Asegurar estado reseteado si no hay scroll horizontal
-      track.style.position = 'relative';
-      track.style.top      = '0';
-      track.style.left     = '';
-      track.style.width    = '';
-      current = target = PAD;
-      track.style.transform = `translateX(${PAD}px)`;
-      return;
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(0.8,0,1,1);
     }
-
-    const start = section.getBoundingClientRect().top + window.scrollY; // Restaurado al cálculo original de WhoYouWant
-    const end = start + extra * factor; // Calcular 'end' usando factor
-    const y = window.scrollY;
-
-    if (y < start) {
-      track.style.position = 'relative';
-      track.style.top = '0';
-      track.style.left     = ''; // Asegurar reseteo
-      track.style.width    = ''; // Asegurar reseteo
-      target = PAD; // Target inicial
-    } else if (y >= start && y <= end) {
-      // Mantener lógica para 'left' y 'width' cuando está fijo
-      const left = section.getBoundingClientRect().left;
-      track.style.position = 'fixed';
-      track.style.top      = '0';
-      track.style.left     = `${left}px`;
-      track.style.width    = `${section.offsetWidth}px`;
-      // Calcular target de forma similar a Identity.astro
-      target = (start - y) / factor + PAD;
-    } else { // y > end
-      track.style.position = 'relative';
-      track.style.top      = `${extra * factor}px`; // Posicionar después del scroll
-      track.style.left     = ''; // Asegurar reseteo
-      track.style.width    = ''; // Asegurar reseteo
-      // Target final, similar a Identity.astro
-      target = -base - PAD;
-    }
-
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(animate);
+    50% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0,0,0.2,1);
     }
   }
+  .animate-bounce { /* Asegúrate que esta clase aplique la animación vertical */
+    animation: bounce 1s infinite;
+  }
+</style>
 
-  // inicial y listeners
-  const ro = new ResizeObserver(resize);
-  ro.observe(track);
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('player-slider');
+    const cards = Array.from(document.querySelectorAll('[id^="player-card-"]'));
+    const dotsContainer = document.getElementById('slider-dots');
 
-  window.addEventListener('resize', resize);
-  window.addEventListener('orientationchange', resize);
-  window.addEventListener('scroll', onScroll);
-  window.addEventListener('load', resize); // Asegura que todo esté cargado
+    if (!slider || cards.length === 0 || !dotsContainer) return;
 
-  // Eliminada la lógica de track.querySelectorAll('img') ya que no aplica aquí
-  // Las imágenes son background-image en divs, no <img> tags.
+    // --- Puntos y scroll snap como antes ---
+    const dots = Array.from(dotsContainer.querySelectorAll('.slider-dot'));
+    const activeDotClass = 'bg-secondary';
+    const inactiveDotClass = 'bg-gray-400';
+    dots.forEach((dot, i) => {
+      dot.classList.add(i === 0 ? activeDotClass : inactiveDotClass);
+      dot.addEventListener('click', () => {
+        if (!slider.classList.contains('slider-disabled')) {
+          cards[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
 
-  // Llamada inicial a resize, por si las imágenes ya están cacheadas
-  resize();
-})();
+    const observerOptionsCards = {
+      root: slider,
+      threshold: 0.7,
+    };
+    const observerCards = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = parseInt(entry.target.id.split('-').pop());
+          dots.forEach((dot, i) => {
+            dot.classList.toggle(activeDotClass, i === idx);
+            dot.classList.toggle(inactiveDotClass, i !== idx);
+          });
+        }
+      });
+    }, observerOptionsCards);
+    cards.forEach(card => observerCards.observe(card));
+    // ---------------------------------------
+
+    // 1) Al inicio, deshabilitamos el slider:
+    slider.classList.add('slider-disabled');
+
+    // 2) Creamos un observer para el propio slider:
+    const observerOptionsSlider = {
+      root: null,       // viewport principal
+      threshold: 1.0,   // 100% visible
+    };
+    const observerSlider = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Cuando está 100% visible, habilitamos scroll y clicks
+          slider.classList.remove('slider-disabled');
+        } else {
+          // Si sale aunque sea un píxel, lo deshabilitamos
+          slider.classList.add('slider-disabled');
+        }
+      });
+    }, observerOptionsSlider);
+
+    observerSlider.observe(slider);
+  });
 </script>
-
-<!-- Tailwind:
-- .aspect-[5/6] mantiene proporción.
-- overflow-hidden en #who-section para ocultar.
-- Track usa flex-nowrap en una fila.
-- Las tarjetas tienen w-48…w-64 fijo.
--->

@@ -3,6 +3,5 @@
 @theme {
     --color-primary: #EE7C1B;
     --color-secondary: #FBCB4E;
-    --breakpoint-xxl: 2561px;
-    --spacing-max-content: 1440px; 
+    --spacing-max-content: 1440px;
 }

@@ -5,30 +5,27 @@ import tenis from '@/assets/images/sports/tenis.png';
 import escalada from '@/assets/images/sports/escalada.webp';
 const images = [escalada.src, tenis.src];
 ---
-<section class="flex flex-col items-center justify-center w-full max-w-max-content mx-auto pt-12 sm:pt-16 md:pt-20 lg:pt-24 mb-16 sm:mb-20 md:mb-24 lg:mb-32">
-  <div id="slider" data-images={JSON.stringify(images)} class="relative w-full overflow-hidden h-[60vw] max-h-[700px] min-h-[300px]">
+<section class="flex flex-col items-center justify-center w-full max-w-max-content mx-auto mb-16 sm:mb-20 md:mb-24 lg:mb-32"> {/* Eliminado pt-* */}
+  
+  <div class="relative z-10 flex justify-center w-full">
+    <div 
+      class="bg-black inline-block px-12 mb-[-3rem] sm:mb-[-3.5rem] md:mb-[-4rem] lg:mb-[-2.5rem]"
+      style="clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 10% 100%);">
+      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-black italic text-secondary text-balance py-4 sm:px-12 sm:py-5 md:px-16 md:py-6">
+        DESCARGA LA APP Y HAZ MATCH
+      </h1>
+    </div>
+  </div>
+  
+  <div id="slider" data-images={JSON.stringify(images)} class="rounded-2xl relative w-full overflow-hidden h-[60vw] max-h-[700px] min-h-[300px]">
     <img id="slider-img-1" src={images[0]} alt="Deporte escalada" class="absolute inset-0 object-cover w-full h-full transition-opacity duration-700" style="opacity:1;" />
     <img id="slider-img-2" src={images[1]} alt="Deporte tenis" class="absolute inset-0 object-cover w-full h-full transition-opacity duration-700" style="opacity:0;" />
-
-    <!-- Texto 1: sólo en lg+ -->
-    <h1 class="hidden lg:block absolute transform -translate-x-1/2 -translate-y-1/2 text-secondary font-bold italic text-center [text-shadow:_1px_1px_2px_rgba(0,0,0,0.3)]"
-        style="top:38%; left:25%; font-size:clamp(1.5rem,4vw,3rem);">
-      <span class="block">DESCARGA</span><span class="block">LA APP</span>
-    </h1>
-
-    <!-- Texto 2: sólo en lg+ -->
-    <h1 class="hidden lg:block absolute transform -translate-x-1/2 -translate-y-1/2 text-secondary font-bold italic text-center [text-shadow:_1px_1px_2px_rgba(0,0,0,0.3)]"
-        style="top:48%; left:52%; font-size:clamp(1.5rem,4vw,3rem);">
-      <span class="block">Y HAZ</span><span class="block">MATCH</span>
-    </h1>
-
-    <!-- Iconos: centrados por defecto, a la derecha en lg -->
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 items-center lg:left-auto lg:right-10 lg:translate-x-0 lg:-translate-y-1/2">
-      <a href="#" target="_blank" rel="noopener noreferrer">
-        <GooglePlay class="w-48 sm:w-52 md:w-56 lg:w-64 xl:w-72 h-auto cursor-pointer hover:scale-110 transition duration-300" />
+    <div class="absolute bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-10 left-1/2 transform -translate-x-1/2 z-10 flex flex-row gap-3 sm:gap-4 md:gap-6 lg:gap-8 justify-center items-center w-full px-4">
+      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Descargar en Google Play" class="hover:scale-110 transition-transform duration-300">
+        <GooglePlay class="w-32 sm:w-48 md:w-60 lg:w-72 xl:w-96 h-auto cursor-pointer" />
       </a>
-      <a href="#" target="_blank" rel="noopener noreferrer">
-        <AppStore class="w-48 sm:w-52 md:w-56 lg:w-64 xl:w-72 h-auto cursor-pointer hover:scale-110 transition duration-300" />
+      <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Descargar en App Store" class="hover:scale-110 transition-transform duration-300">
+        <AppStore class="w-32 sm:w-48 md:w-60 lg:w-72 xl:w-96 h-auto cursor-pointer" />
       </a>
     </div>
   </div>

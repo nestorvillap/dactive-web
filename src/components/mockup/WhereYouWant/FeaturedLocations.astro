@@ -1,30 +1,65 @@
 ---
-interface Props {
-  mock2Src: string;
-}
-const { mock2Src } = Astro.props as Props;
+import mock2 from '@/assets/images/phone/mock2.png';
+import mock2Shadow from '@/assets/images/phone/rightShadow.png';
 ---
-<figure class="lg:col-span-2 overflow-hidden">
-  <!-- Contenedor que recorta el 15% izquierdo -->
-  <div class="map-container relative inline-block" style="transform: translateX(+15%);">
+
+<figure class="lg:col-span-2">
+  <!-- Imagen de la mockup -->
+  <div class="relative inline-block w-[115%] lg:w-full lg:ml-[15%]">
     <img
-      src={mock2Src}
-      alt="Mapa"
-      class="block w-full h-auto"
+      src={mock2Shadow.src}
+      alt=""
+      class="absolute scale-200 inset-0 w-full h-full object-cover pointer-events-none"
       aria-hidden="true"
     />
-    <!-- Pins posicionados con % respecto al ancho natural de la imagen -->
+    <img
+      src={mock2.src}
+      alt="Mapa"
+      class="relative block w-full h-auto z-[1]"
+      aria-hidden="true"
+    />
+    <!-- Puntos en el mapa -->
     <div class="map-pin" style="top: 12%; left: 60%;"></div>
     <div class="map-pin" style="top: 28%; left: 48%;"></div>
     <div class="map-pin" style="top: 38%; left: 70%;"></div>
   </div>
 </figure>
 
-<style>
-  .map-container {
-    /* inline-block hace que su ancho sea el de la imagen real */
-  }
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mapPinsNodeList = document.querySelectorAll('.map-pin');
+    if (!mapPinsNodeList.length) return;
 
+    const mapPinsArray = Array.from(mapPinsNodeList);
+
+    const baseDelayIncrement = 250;
+    const overallInitialDelay = 300;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const pinElement = entry.target;
+          const pinIndex = mapPinsArray.findIndex(p => p === pinElement);
+
+          if (pinIndex !== -1) {
+            setTimeout(() => {
+              pinElement.classList.add('is-visible');
+            }, overallInitialDelay + pinIndex * baseDelayIncrement);
+          } else {
+            pinElement.classList.add('is-visible');
+          }
+          obs.unobserve(pinElement);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    mapPinsArray.forEach(pin => {
+      observer.observe(pin);
+    });
+  });
+</script>
+
+<style>
   .map-pin {
     position: absolute;
     width: 8%;
@@ -54,40 +89,3 @@ const { mock2Src } = Astro.props as Props;
     transform: translate(-50%, -50%);
   }
 </style>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const mapPinsNodeList = document.querySelectorAll('.map-pin');
-    if (!mapPinsNodeList.length) return;
-
-    // Convertir NodeList a Array para usar métodos de array como findIndex
-    const mapPinsArray = Array.from(mapPinsNodeList);
-
-    const baseDelayIncrement = 250; // ms - Retraso incremental para cada pin
-    const overallInitialDelay = 300; // ms - Retraso inicial para todos los pines
-
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const pinElement = entry.target;
-          // Encontrar el índice del pin actual para calcular el retraso escalonado
-          const pinIndex = mapPinsArray.findIndex(p => p === pinElement);
-
-          if (pinIndex !== -1) { // Asegurarse de que el pin fue encontrado
-            setTimeout(() => {
-              pinElement.classList.add('is-visible');
-            }, overallInitialDelay + pinIndex * baseDelayIncrement);
-          } else {
-            // Fallback: si no se encuentra el índice, mostrarlo inmediatamente
-            pinElement.classList.add('is-visible');
-          }
-          obs.unobserve(pinElement); // Dejar de observar una vez que la animación está programada
-        }
-      });
-    }, { threshold: 0.4 }); // La animación se dispara cuando el 40% del pin es visible
-
-    mapPinsArray.forEach(pin => {
-      observer.observe(pin);
-    });
-  });
-</script>

@@ -1,8 +1,166 @@
-<aside class="relative w-[100%] md:w-[115% flex flex-col items-start justify-center p-4 sm:p-5 md:p-6 gap-2 sm:gap-3 md:gap-4">
-  <h3 class="[font-size:clamp(1.5rem,4vw,2.5rem)] font-semibold text-secondary w-full">
+---
+import pub            from '@/assets/images/locations/pub.png';
+import club           from '@/assets/images/locations/club.png';
+import zonasPublicas  from '@/assets/images/locations/zonasPublicas.png';
+import university     from '@/assets/images/locations/universidades.jpg';
+import urbanizacion   from '@/assets/images/locations/urbanizaciones.png';
+
+const espacios = [
+  {
+    id: 1,
+    title: "Clubs deportivos",
+    imageSrc: club.src, 
+    imageAlt: "Interior de un club deportivo moderno"
+  },
+  {
+    id: 2,
+    title: "Parques y zonas públicas",
+    imageSrc: zonasPublicas.src, 
+    imageAlt: "Parque soleado con personas haciendo ejercicio"
+  },
+  {
+    id: 3,
+    title: "Pubs y recreativos",
+    imageSrc: pub.src, 
+    imageAlt: "Mesa de billar en un pub acogedor"
+  },
+  {
+    id: 4,
+    title: "Universidades y empresas",
+    imageSrc: university.src, 
+    imageAlt: "Campo de deportes en un campus universitario"
+  },
+  {
+    id: 5,
+    title: "Urbanizaciones y hoteles",
+    imageSrc: urbanizacion.src  ,
+    imageAlt: "Piscina lujosa en un hotel o urbanización"
+  }
+];
+---
+
+<aside class="relative w-[100%] flex flex-col items-center justify-center p-4 sm:p-5 md:p-6 gap-4 sm:gap-5">
+  <!-- Titulo -->
+  <h3 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-black italic text-secondary">
     DÓNDE QUIERES
   </h3>
-  <p lang="es" class="[font-size:clamp(0.875rem,2.5vw,1.25rem)] text-white [text-align:justify] [-webkit-hyphens:auto] [-ms-hyphens:auto] [hyphens:auto] [text-wrap:balance] leading-relaxed">
-    Localizaciones privadas como clubes, urbanizaciones, pubs, recreativos... También públicas y gratuitas como parques, zonas naturales... Dónde mejor os venga a tus compañeros y a ti para disfrutar al máximo.
+  <p class="text-md sm:text-lg md:text-xl lg:text-2xl italic text-center text-balance text-gray-500">
+    ¿Dónde te imaginas jugando tu deporte favorito?
   </p>
+
+  <!-- Botón para abrir el diálogo -->
+  <button
+    id="openEspaciosButton"
+    class="bg-secondary self-center text-black cursor-pointer px-6 py-3 rounded-lg shadow-md hover:opacity-90 transition-opacity font-medium text-xs md:text-sm lg:text-md xl:text-lg "
+  >
+    Tipos de espacios deportivos
+  </button>
 </aside>
+
+<!-- Diálogo modal mejorado -->
+<dialog
+  id="espaciosDialog"
+  class="rounded-2xl w-11/12 max-w-2xl bg-black backdrop:bg-black/60 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl overflow-hidden"
+>
+  <div class="p-5 sm:p-6 md:p-8 relative">
+    <!-- Botón de cierre mejorado -->
+    <button
+      id="closeEspaciosButton"
+      class="absolute top-4 right-4 cursor-pointer sm:top-5 sm:right-5 text-secondary hover:text-secondary transition-colors duration-150 z-20 p-1" 
+      aria-label="Cerrar diálogo"
+    >
+      <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+
+    <h4 class="text-xl w-[82%] mx-auto pr-8 sm:pr-0 md:text-3xl lg:text-5xl text-center font-black italic text-secondary"> 
+      Espacios deportivos
+    </h4>
+
+    <!-- Contenedor de Cards -->
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+      {espacios.map((espacio) => (
+        <article class="bg-secondary rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-1 flex flex-col">
+          <img 
+            src={espacio.imageSrc} 
+            alt={espacio.imageAlt} 
+            class="w-full h-40 sm:h-48 object-cover" 
+            loading="lazy"
+          />
+          <h5 class="text-lg sm:text-xl text-center py-2 font-semibold text-gray-900 mb-2">{espacio.title}</h5>
+        </article>
+      ))}
+    </div>
+  </div>
+</dialog>
+
+<!-- Script para controlar el diálogo (sin cambios) -->
+<script>
+  const openBtn = document.getElementById('openEspaciosButton');
+  const closeBtn = document.getElementById('closeEspaciosButton');
+  const dialog = document.getElementById('espaciosDialog');
+  const body = document.body;
+
+  if (openBtn && dialog && closeBtn) {
+    openBtn.addEventListener('click', () => {
+      if (dialog.showModal) {
+        dialog.showModal();
+        body.style.overflow = 'hidden';
+        body.classList.add('dialog-open-blur');
+      } else {
+        dialog.setAttribute('open', '');
+        body.style.overflow = 'hidden';
+        body.classList.add('dialog-open-blur');
+      }
+    });
+
+    const closeDialog = () => {
+      dialog.close();
+      body.style.overflow = '';
+      body.classList.remove('dialog-open-blur');
+    };
+
+    closeBtn.addEventListener('click', closeDialog);
+
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) {
+        closeDialog();
+      }
+    });
+    
+    dialog.addEventListener('close', () => {
+        body.style.overflow = '';
+        body.classList.remove('dialog-open-blur');
+    });
+  }
+</script>
+
+<style is:global>
+  /* Estilos para la scrollbar personalizada (opcional, puede variar entre navegadores) */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* gray-300 */
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; /* gray-400 */
+  }
+  /* Para Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent; /* thumb track */
+  }
+
+  body.dialog-open-blur > *:not(dialog) {
+    filter: blur(4px);
+    transition: filter 0.3s ease-out;
+  }
+
+  body > dialog { /* Asegura que el diálogo en sí no se desenfoque */
+    filter: none !important; 
+  }
+</style>
