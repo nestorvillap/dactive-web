@@ -1,6 +1,5 @@
 ---
 import mock1       from '@/assets/images/phone/mock1.png';
-import shadowImage from '@/assets/images/balls/shadow.png';
 import mock1Shadow from '@/assets/images/phone/leftShadow.png';
 
 import { featuredSports, iconPositions } from '@/data/sports';
@@ -18,158 +17,92 @@ import { featuredSports, iconPositions } from '@/data/sports';
     <img
       src={mock1.src}
       alt="Selección de deporte"
-      class="relative block w-full h-auto "
+      class="relative block w-full h-auto"
     />
   </div>
+
   <!-- Iconos de deportes destacados -->
   {featuredSports.map((sport, i) => {
     const pos = iconPositions[i % iconPositions.length];
     const widthClass = sport.featuredWidth;
-    const delay = `${i * 150}ms`;
-
     return (
       <div
         class={`ball-wrapper absolute ${widthClass} aspect-square`}
-        data-index={i}
         style={`top: ${pos.top}; left: ${pos.left}; overflow: visible;`}
+        key={i}
       >
-        <figure class="ball" style={`animation-delay: ${delay}`}>
-          <img
-            src={shadowImage.src}
-            alt=""
-            class="absolute inset-0 w-full h-full translate-x-2 translate-y-2 z-0"
-          />
+        <figure class="ball">
           <img
             src={sport.iconSrc}
             alt={sport.name}
-            class="absolute inset-0 w-full h-full z-10"
+            class="absolute inset-0 w-full h-full"
           />
         </figure>
       </div>
     );
   })}
-
 </figure>
 
-<script is:inline>
-  const wrappers = document.querySelectorAll('.ball-wrapper');
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const ball = entry.target.querySelector('.ball');
-          ball.classList.add('animate');
-          observer.unobserve(entry.target);
-        }
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const balls = document.querySelectorAll(".ball");
+    balls.forEach((ball, i) => {
+      // Estado inicial: fuera de pantalla arriba/izquierda, pequeño e invisible
+      gsap.set(ball, {
+        x: -200,
+        y: -200,
+        scale: 0.5,
+        opacity: 0,
+        transformOrigin: "50% 50%",
       });
-    },
-    { threshold: 0.2 }
-  );
-  wrappers.forEach((w) => observer.observe(w));
+
+      // Creamos una Timeline que dispara al entrar en el viewport
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ball,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      // Animación de aparición + entrada diagonal
+      tl.to(ball, {
+        opacity: 1,
+        scale: 1,
+        x: 0,
+        duration: 1,
+        ease: "power1.out",
+        delay: i * 0.1,
+      })
+      .to(ball, {
+        y: 0,
+        duration: 1.2,
+        ease: "bounce.out",
+      }, "<") // sincroniza inicio de Y con el tween anterior
+      .to(ball, {
+        y: "-=30",
+        duration: 0.4,
+        ease: "power1.out",
+        yoyo: true,
+        repeat: -1,
+      });
+    });
+  });
 </script>
 
 <style is:global>
-  /* Parámetros ajustables de “física” */
-  :root {
-    --ball-start-x: -300%;
-    --ball-end-x:   0%;
-
-    --ball-drop-y:    -400px;
-    --ball-bounce1-y: -280px;
-    --ball-bounce2-y: -160px;
-    --ball-bounce3-y: -60px;
-
-    --ball-scale-start: 0.5;
-    --ball-scale-end:   1;
-
-    --ball-duration:    1.2s;
-    --ball-timing-func: ease-out;
+  .ball-wrapper {
+    /* posición y tamaño definidos inline */
   }
-
   .ball {
-    opacity: 0;
     will-change: transform, opacity;
     width: 100%;
     height: 100%;
-    transform:
-      translate(-50%, -50%)
-      translateX(var(--ball-start-x))
-      translateY(var(--ball-drop-y))
-      scale(var(--ball-scale-start));
-    transition: opacity 0.2s ease-out;
-  }
-
-  .ball.animate {
-    animation: bounceReal var(--ball-duration) var(--ball-timing-func) forwards;
-  }
-
-  @keyframes bounceReal {
-    /* 0: en el aire, pequeña y oculta */
-    0% {
-      opacity: 0;
-      transform:
-        translate(-50%, -50%)
-        translateX(var(--ball-start-x))
-        translateY(var(--ball-drop-y))
-        scale(var(--ball-scale-start));
-    }
-    /* 20%: primer impacto */
-    20% {
-      opacity: 1;
-      transform:
-        translate(-50%, -50%)
-        translateX(calc(var(--ball-start-x) * 0.67))
-        translateY(0)
-        scale(var(--ball-scale-end));
-    }
-    /* 35%: rebote 1 (70% altura) */
-    35% {
-      transform:
-        translate(-50%, -50%)
-        translateX(calc(var(--ball-start-x) * 0.5))
-        translateY(var(--ball-bounce1-y))
-        scale(var(--ball-scale-end));
-    }
-    /* 50%: regreso al suelo */
-    50% {
-      transform:
-        translate(-50%, -50%)
-        translateX(calc(var(--ball-start-x) * 0.33))
-        translateY(0)
-        scale(var(--ball-scale-end));
-    }
-    /* 65%: rebote 2 (40% altura) */
-    65% {
-      transform:
-        translate(-50%, -50%)
-        translateX(calc(var(--ball-start-x) * 0.17))
-        translateY(var(--ball-bounce2-y))
-        scale(var(--ball-scale-end));
-    }
-    /* 80%: regreso de nuevo */
-    80% {
-      transform:
-        translate(-50%, -50%)
-        translateX(calc(var(--ball-start-x) * 0.08))
-        translateY(0)
-        scale(var(--ball-scale-end));
-    }
-    /* 90%: micro-rebote final (15% altura) */
-    90% {
-      transform:
-        translate(-50%, -50%)
-        translateX(calc(var(--ball-start-x) * 0.03))
-        translateY(var(--ball-bounce3-y))
-        scale(var(--ball-scale-end));
-    }
-    /* 100%: posición final */
-    100% {
-      opacity: 1;
-      transform:
-        translate(-50%, -50%)
-        translateX(var(--ball-end-x))
-        translateY(0)
-        scale(var(--ball-scale-end));
-    }
+    /* Sombra suave en CSS en lugar de imagen */
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
   }
 </style>

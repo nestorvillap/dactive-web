@@ -3,155 +3,88 @@ import type { PlayerCardData } from '@/data/players';
 import { playerCardData } from '@/data/players';
 ---
 
-<div class="w-full flex flex-col md:flex-row md:items-center md:gap-8 p-4 md:p-8 justify-center">
-
-  {/* Contenedor para el texto (aparece arriba en móvil, a la derecha en desktop) */}
-  <div class="w-full md:w-1/2 lg:w-2/5 order-1 md:order-2 mb-8 md:mb-0 flex flex-col items-center justify-center p-4 sm:p-5 md:p-6 gap-4 sm:gap-5">
-    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center font-black italic text-secondary">
-     Con quien quieras
+<div
+  id="slider-wrapper"
+  class="w-full h-screen flex flex-col md:flex-row"
+>
+  <!-- Texto -->
+  <div class="w-full md:w-1/2 lg:w-2/5 flex-none flex flex-col items-center justify-center p-4 md:p-8 md:order-2">
+    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center md:text-left font-black italic text-secondary uppercase">
+      Con quien quieras
     </h2>
-    <p class="text-md sm:text-lg md:text-xl lg:text-2xl italic text-center text-gray-500">
+    <p class="mt-2 text-md sm:text-lg md:text-xl lg:text-2xl italic text-center md:text-left text-gray-500">
       Elige a tus compañeros, o deja que el sistema te sugiera tus compañeros ideales
     </p>
   </div>
 
-  {/* Contenedor para Slider + Indicador de Puntos */}
-  <div class="relative md:w-1/2 lg:w-3/5 order-2 md:order-1">
+  <!-- Slider -->
+  <div class="relative flex-1 md:w-1/2 lg:w-3/5 md:order-1">
     <section
       id="player-slider"
-      class="h-[85vh] overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
+      class="w-full h-full overflow-hidden relative pt-8 pb-20"
     >
-      {playerCardData.map((p: PlayerCardData, index: number) => (
-        <div
-          id={`player-card-${index}`}
-          class="snap-center flex-none w-full h-[75vh] mx-auto my-8 rounded-2xl shadow-2xl bg-cover bg-center relative flex flex-col justify-end p-4 sm:p-6 md:p-8 overflow-hidden"
-          style={`background-image:url(${p.imageSrc})`}
-        >
-          <div class="relative z-10">
-            <span class="block text-secondary font-bold text-3xl sm:text-4xl md:text-5xl leading-tight drop-shadow-lg">
-              {p.title1}
-            </span>
-            <span class="block text-secondary font-bold text-3xl sm:text-4xl md:text-5xl leading-tight drop-shadow-lg">
-              {p.title2}
-            </span>
-          </div>
-          <span class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent"></span>
-
-          {/* Indicador de scroll (flecha) solo en la primera tarjeta */}
-          {index === 0 && (
-            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 animate-bounce">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 sm:w-8 sm:h-8 text-white opacity-75">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-              </svg>
+      <div class="slides flex will-change-transform h-full">
+        {playerCardData.map((p: PlayerCardData, index: number) => (
+          <div
+            id={`player-card-${index}`}
+            class="h-full mx-2 rounded-2xl shadow-2xl bg-cover bg-center relative flex flex-col justify-end p-4 sm:p-6 md:p-8 overflow-hidden"
+            style={`background-image:url(${p.imageSrc})`}
+          >
+            <div class="relative z-10">
+              <span class="block text-secondary font-bold text-3xl sm:text-4xl md:text-5xl leading-tight drop-shadow-lg">
+                {p.title1}
+              </span>
+              <span class="block text-secondary font-bold text-3xl sm:text-4xl md:text-5xl leading-tight drop-shadow-lg">
+                {p.title2}
+              </span>
             </div>
-          )}
-        </div>
-      ))}
+            <span class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent"></span>
+          </div>
+        ))}
+      </div>
     </section>
-
-    {/* Indicador de Puntos del Slider */}
-    <div id="slider-dots" class="absolute top-1/2 -translate-y-1/2 left-2 sm:left-3 md:left-4 flex flex-col gap-2.5 z-30">
-      {playerCardData.map((_, index) => (
-        <button
-          aria-label={`Ir al slide ${index + 1}`}
-          data-slide-index={index}
-          class="slider-dot w-2 h-2 cursor-pointer rounded-full transition-colors duration-300 focus:outline-none"
-        ></button>
-      ))}
-    </div>
   </div>
 </div>
 
-<style>
-  /* oculta la scrollbar en WebKit, opcional */
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  /* y también en Firefox */
-  .scrollbar-hide {
-    scrollbar-width: none;
-  }
-
-    /* Clase que deshabilita scroll y clicks */
-  .slider-disabled {
-    overflow-y: hidden !important;
-    pointer-events: none !important;
-  }
-
-  @keyframes bounce {
-    0%, 100% {
-      transform: translateY(-25%);
-      animation-timing-function: cubic-bezier(0.8,0,1,1);
-    }
-    50% {
-      transform: translateY(0);
-      animation-timing-function: cubic-bezier(0,0,0.2,1);
-    }
-  }
-  .animate-bounce { /* Asegúrate que esta clase aplique la animación vertical */
-    animation: bounce 1s infinite;
-  }
-</style>
-
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const slider = document.getElementById('player-slider');
-    const cards = Array.from(document.querySelectorAll('[id^="player-card-"]'));
-    const dotsContainer = document.getElementById('slider-dots');
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
 
-    if (!slider || cards.length === 0 || !dotsContainer) return;
+  document.addEventListener("DOMContentLoaded", () => {
+    const wrapper = document.getElementById("slider-wrapper");
+    const slider  = document.getElementById("player-slider");
+    const track   = slider.querySelector(".slides");
+    const slides  = Array.from(track.children);
+    const total   = slides.length;
 
-    // --- Puntos y scroll snap como antes ---
-    const dots = Array.from(dotsContainer.querySelectorAll('.slider-dot'));
-    const activeDotClass = 'bg-secondary';
-    const inactiveDotClass = 'bg-gray-400';
-    dots.forEach((dot, i) => {
-      dot.classList.add(i === 0 ? activeDotClass : inactiveDotClass);
-      dot.addEventListener('click', () => {
-        if (!slider.classList.contains('slider-disabled')) {
-          cards[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      });
+    // 1) Ajustamos anchura del track
+    track.style.width = `${total * 100}%`;
+    slides.forEach(slide => {
+      slide.style.flex = `0 0 ${100 / total}%`;
     });
 
-    const observerOptionsCards = {
-      root: slider,
-      threshold: 0.7,
-    };
-    const observerCards = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const idx = parseInt(entry.target.id.split('-').pop());
-          dots.forEach((dot, i) => {
-            dot.classList.toggle(activeDotClass, i === idx);
-            dot.classList.toggle(inactiveDotClass, i !== idx);
-          });
-        }
-      });
-    }, observerOptionsCards);
-    cards.forEach(card => observerCards.observe(card));
-    // ---------------------------------------
+    // 2) Calculamos desplazamiento total en porcentaje
+    const movePercent = -100 * (total - 1) / total;
 
-    // 1) Al inicio, deshabilitamos el slider:
-    slider.classList.add('slider-disabled');
+    // 3) Longitud de scroll proporcional al número de slides
+    const scrollDistance = slider.offsetWidth * (total - 1);
 
-    // 2) Creamos un observer para el propio slider:
-    const observerOptionsSlider = {
-      root: null,       // viewport principal
-      threshold: 1.0,   // 100% visible
-    };
-    const observerSlider = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Cuando está 100% visible, habilitamos scroll y clicks
-          slider.classList.remove('slider-disabled');
-        } else {
-          // Si sale aunque sea un píxel, lo deshabilitamos
-          slider.classList.add('slider-disabled');
-        }
-      });
-    }, observerOptionsSlider);
+    // 4) Reservamos espacio bajo el wrapper para no solapar contenido
+    wrapper.style.marginBottom = `${scrollDistance}px`;
 
-    observerSlider.observe(slider);
+    // 5) ScrollTrigger: pinnea el wrapper completo
+    gsap.to(track, {
+      xPercent: movePercent,
+      ease: "none",
+      scrollTrigger: {
+        trigger: wrapper,
+        start:   "top top",
+        end:     `+=${scrollDistance}`,
+        scrub:   1,
+        pin:     true,
+        pinSpacing: false
+      },
+    });
   });
 </script>

@@ -54,7 +54,7 @@ export const sportsIconData: SportIcon[] = Object.entries(sportIconFiles).map(
     const name = toName(path);
     return {
       name,
-      iconSrc: imageAsset.src, // Cambiado de 'url' a 'imageAsset.src'
+      iconSrc: imageAsset.src,
       idKey: toIdKey(name),
       isFeatured: name in FEATURED_WIDTHS,
       featuredWidth: FEATURED_WIDTHS[name],

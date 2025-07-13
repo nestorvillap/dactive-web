@@ -1,20 +1,11 @@
-// src/data/players.ts
 export interface PlayerCardData {
   imageSrc: string;
   title1: string;
   title2: string;
 }
 
-// Interfaz para el objeto que devuelve import.meta.glob para cada imagen
-interface PlayerImageAsset {
-  src: string;
-  // Aquí podrían ir otras propiedades si Astro/Vite las proporcionan y las necesitas,
-  // como width, height, format.
-}
+interface PlayerImageAsset { src: string }
 
-// Usamos import.meta.glob para obtener las rutas procesadas por Astro/Vite
-// La opción { eager: true } carga los módulos inmediatamente.
-// La opción { import: 'default' } nos da el módulo de imagen (que esperamos sea PlayerImageAsset).
 const playerImageModules = import.meta.glob<PlayerImageAsset>('/src/assets/images/players/*.png', { eager: true, import: 'default' });
 
 export const playerCardData: PlayerCardData[] = [
